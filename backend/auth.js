@@ -1,13 +1,13 @@
-var hash = require("pbkdf2-password")();
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
-const setPass = function (pwd) {
-  hash({ password: pwd }, function (err, pass, salt, hash) {
-    if (err) throw err;
-    // store the salt & hash in the "db"
-    users.salt = salt;
-    users.hash = hash;
-  });
-  console.log(users);
+const hashPass = async function (pwd) {
+  let hashedPass = await bcrypt.hash(pwd, saltRounds);
+  return hashedPass;
 };
 
-module.exports = { setPass };
+const authUser = async function (pwd, hash) {
+  return await bcrypt.compare(pwd, hash);
+};
+
+module.exports = { hashPass, authUser };

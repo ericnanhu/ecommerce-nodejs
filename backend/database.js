@@ -21,10 +21,7 @@ const userSchema = new Schema(
     avatar: { type: String },
     username: { type: String, required: true },
     email: { type: String, required: true },
-    password: {
-      hash: { type: String, required: true },
-      salt: { type: String, required: true },
-    },
+    password: { type: String, required: true },
     phone: { type: String },
     bio: { type: String },
     link: {
