@@ -17,6 +17,16 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import("../views/AboutView.vue"),
     },
+    {
+      path: "/admin",
+      name: "adminHome",
+      component: () => import("../views/admin/AdminHomeView.vue"),
+    },
+    {
+      path: "/admin/site",
+      name: "adminSiteManagement",
+      component: () => import("../views/admin/AdminSiteManagementView.vue"),
+    },
   ],
 });
 

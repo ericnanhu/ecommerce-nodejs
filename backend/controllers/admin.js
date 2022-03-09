@@ -22,13 +22,9 @@ const listSite = async function (req, res, next) {
 };
 
 const createSite = function (req, res, next) {
-  const newSite = new Site({
-    name: req.body.name,
-    description: req.body.description,
-    keywords: req.body.keywords,
-  });
+  const newSite = new Site(req.body);
   newSite.save();
-  res.send("New Site Created!");
+  res.send(newSite);
 };
 
 const updateSite = async function (req, res, next) {
@@ -58,7 +54,7 @@ const createUser = async function (req, res, next) {
     password: hashedPass,
   });
   newUser.save();
-  res.send("New User Created!");
+  res.send(newUser);
 };
 
 const updateUser = async function (req, res, next) {
@@ -90,11 +86,9 @@ const listProductCategory = async function (req, res, next) {
 };
 
 const createProductCategory = function (req, res, next) {
-  const newProductCategory = new ProductCategory({
-    name: req.body.name,
-  });
+  const newProductCategory = new ProductCategory(req.body);
   newProductCategory.save();
-  res.send("New Product Category Created!");
+  res.send(newProductCategory);
 };
 
 const updateProductCategory = async function (req, res, next) {
@@ -121,7 +115,7 @@ const listProduct = async function (req, res, next) {
 const createProduct = function (req, res, next) {
   const newProduct = new Product(req.body);
   newProduct.save();
-  res.send("New Product Created!");
+  res.send(newProduct);
 };
 
 const updateProduct = async function (req, res, next) {
