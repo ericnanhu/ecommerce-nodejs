@@ -16,6 +16,21 @@ router.put("/site/update", updateSite);
 router.get("/site/show", showSite);
 router.delete("/site/delete", deleteSite);
 
+// Role Management
+var {
+  listRole,
+  createRole,
+  updateRole,
+  showRole,
+  deleteRole,
+} = require("../controllers/admin");
+
+router.get("/role/list", listRole);
+router.post("/role/create", createRole);
+router.put("/role/update", updateRole);
+router.get("/role/show", showRole);
+router.delete("/role/delete", deleteRole);
+
 // User Management
 var {
   listUser,
