@@ -1,10 +1,13 @@
 var mongoose = require("mongoose");
+var { siteSchema } = require("../models/site");
 var {
-  siteSchema,
-  userSchema,
   productSchema,
+  productImageSchema,
   productCategorySchema,
-} = require("../database");
+} = require("../models/product");
+var { reviewSchema, reviewImageSchema } = require("../models/review");
+var { shopSchema } = require("../models/shop");
+var { roleSchema, userSchema } = require("../models/user");
 
 mongoose.connect("mongodb://admin:password@localhost:27017/ecommerce");
 
@@ -31,6 +34,11 @@ const showRecentProducts = async function (req, res, next) {
   res.json(await Product.find().sort({ created_at: -1 }).limit(10));
 };
 
+// Retrieve one single product
+const showProduct = async function (req, res, next) {
+  res.json(await Product.findById(req.query.id));
+};
+
 // Retrieve all product that belongs to the specified category
 const showCategoryProducts = async function (req, res, next) {
   const category = await ProductCategory.find({ name: req.query.name });
@@ -40,22 +48,10 @@ const showCategoryProducts = async function (req, res, next) {
   res.json(products);
 };
 
-// User Auth
-var { authUser } = require("../auth");
-const userLogin = async function (req, res, next) {
-  const user = await User.findOne({ email: req.body.email });
-  const match = await authUser(req.body.password, user.password);
-  if (match == true) {
-    res.send("User Verified!");
-  } else {
-    res.send("Username or password not correct.");
-  }
-};
-
 module.exports = {
   showSite,
   showAllCategories,
   showRecentProducts,
+  showProduct,
   showCategoryProducts,
-  userLogin,
 };

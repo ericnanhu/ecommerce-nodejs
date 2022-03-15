@@ -2,9 +2,9 @@ var express = require("express");
 var router = express.Router();
 var {
   showSite,
-  userLogin,
   showAllCategories,
   showRecentProducts,
+  showProduct,
   showCategoryProducts,
 } = require("../controllers/index");
 
@@ -14,8 +14,6 @@ router.get("/category/all", showAllCategories);
 router.get("/category", showCategoryProducts);
 
 router.get("/product/recent", showRecentProducts);
-
-
-router.post("/login", userLogin);
+router.get("/product", showProduct);
 
 module.exports = router;
