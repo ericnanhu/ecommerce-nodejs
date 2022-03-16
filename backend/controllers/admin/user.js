@@ -7,32 +7,32 @@ const Role = mongoose.model("Role", roleSchema);
 const User = mongoose.model("User", userSchema);
 
 // Role Management ==========================================================
-const listRole = async function (req, res, next) {
+async function listRole(req, res, next) {
   res.json(await Role.find({}));
-};
+}
 
-const createRole = function (req, res, next) {
+async function createRole(req, res, next) {
   const newRole = new Role(req.body);
   newRole.save();
   res.send(newRole);
-};
+}
 
-const updateRole = async function (req, res, next) {
+async function updateRole(req, res, next) {
   res.json(await Role.findByIdAndUpdate(req.query.id, req.body, { new: true }));
-};
+}
 
-const showRole = async function (req, res, next) {
+async function showRole(req, res, next) {
   res.json(await Role.findById(req.query.id).populate("users"));
-};
+}
 
-const deleteRole = async function (req, res, next) {
+async function deleteRole(req, res, next) {
   res.json(await Role.findByIdAndDelete(req.query.id));
-};
+}
 
 // User Management ==========================================================
-const listUser = async function (req, res, next) {
+async function listUser(req, res, next) {
   res.json(await User.find({}).populate("shop").populate("role", "name"));
-};
+}
 
 // var { hashPass } = require("../../auth");
 
@@ -66,7 +66,7 @@ const listUser = async function (req, res, next) {
 //   }
 // };
 
-const updateUser = async function (req, res, next) {
+async function updateUser(req, res, next) {
   // Admin can only change user's role
 
   // Remove the user from the old role
@@ -94,15 +94,17 @@ const updateUser = async function (req, res, next) {
   );
 
   res.json(updatedUser);
-};
+}
 
-const showUser = async function (req, res, next) {
-  res.json(await User.findById(req.query.id).populate("shop").populate("role", "name"));
-};
+async function showUser(req, res, next) {
+  res.json(
+    await User.findById(req.query.id).populate("shop").populate("role", "name")
+  );
+}
 
-const deleteUser = async function (req, res, next) {
+async function deleteUser(req, res, next) {
   res.json(await User.findByIdAndDelete(req.query.id));
-};
+}
 
 module.exports = {
   listRole,

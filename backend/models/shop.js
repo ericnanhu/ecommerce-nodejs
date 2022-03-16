@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const shopSchema = new Schema(
   {
     name: { type: String, required: true },
-    image: { type: String },
+    logo: { type: String },
     phone: { type: String },
     email: { type: String },
     description: { type: String },

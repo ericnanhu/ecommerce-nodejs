@@ -9,7 +9,7 @@ const Role = mongoose.model("Role", roleSchema);
 // User Registration
 var { hashPass } = require("../auth");
 
-const userRegister = async function (req, res, next) {
+async function userRegister (req, res, next) {
   // Check if the user exist
   if ((await User.findOne({ email: req.body.email })) !== null) {
     res.send("There is an existing account associated with this email.");
@@ -42,7 +42,7 @@ const userRegister = async function (req, res, next) {
 
 // User Login
 var { authUser } = require("../auth");
-const userLogin = async function (req, res, next) {
+async function userLogin (req, res, next) {
   const user = await User.findOne({ email: req.body.email });
   const match = await authUser(req.body.password, user.password);
   if (match == true) {
@@ -53,7 +53,7 @@ const userLogin = async function (req, res, next) {
 };
 
 // Change user password
-const changePass = async function (req, res, next) {
+async function changePass (req, res, next) {
   // Verify old password
   const user = await User.findOne({ email: req.body.email });
   const match = await authUser(req.body.oldPassword, user.password);
@@ -71,7 +71,7 @@ const changePass = async function (req, res, next) {
 };
 
 // Show user profile
-const showUser = async function (req, res, next) {
+async function showUser (req, res, next) {
   res.json(
     await User.findById(req.query.id)
       .populate("role", "name")
@@ -81,7 +81,7 @@ const showUser = async function (req, res, next) {
 };
 
 // Update user profile
-const updateUser = async function (req, res, next) {
+async function updateUser (req, res, next) {
   // If there is a new avatar
   if (req.file) {
     await User.findByIdAndUpdate(

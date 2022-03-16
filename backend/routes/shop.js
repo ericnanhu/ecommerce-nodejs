@@ -1,20 +1,14 @@
 var express = require("express");
 var router = express.Router();
-var {
-  userRegister,
-  userLogin,
-  showUser,
-  updateUser,
-  changePass,
-} = require("../controllers/user");
+var { createShop, showShop, updateShop, deleteShop } = require("../controllers/shop");
 
 // Set up upload
 const multer = require("multer");
 const fs = require("fs");
 
-const storageAvatar = multer.diskStorage({
+const storageShopLogo = multer.diskStorage({
   destination: function (req, file, cb) {
-    const path = __basedir + `/uploads/user/${req.query.id}/avatar`;
+    const path = __basedir + `/uploads/shop/${req.query.shopID}/logo`;
     fs.mkdirSync(path, { recursive: true });
     return cb(null, path);
   },
@@ -26,12 +20,11 @@ const storageAvatar = multer.diskStorage({
   },
 });
 
-const uploadAvatar = multer({ storage: storageAvatar });
+const uploadShopLogo = multer({ storage: storageShopLogo });
 
-router.post("/register", userRegister);
-router.post("/login", userLogin);
-router.put("/change-password", changePass);
-router.get("/show", showUser);
-router.put("/update", uploadAvatar.single("avatar"), updateUser);
+router.post("/create", createShop);
+router.get("/show", showShop);
+router.put("/update", uploadShopLogo.single("logo"), updateShop);
+router.delete("/delete", deleteShop);
 
 module.exports = router;

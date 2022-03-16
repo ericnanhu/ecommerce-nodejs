@@ -20,27 +20,27 @@ const ProductCategory = mongoose.model(
 );
 
 // Retrieve website information
-const showSite = async function (req, res, next) {
+async function showSite (req, res, next) {
   res.json(await Site.find({}));
 };
 
 // Retrieve all product categories
-const showAllCategories = async function (req, res, next) {
+async function showAllCategories (req, res, next) {
   res.json(await ProductCategory.find({}));
 };
 
 // Retrieve recently created products
-const showRecentProducts = async function (req, res, next) {
-  res.json(await Product.find().sort({ created_at: -1 }).limit(10));
+async function showRecentProducts (req, res, next) {
+  res.json(await Product.find().sort({ created_at: -1 }).limit(15));
 };
 
 // Retrieve one single product
-const showProduct = async function (req, res, next) {
+async function showProduct (req, res, next) {
   res.json(await Product.findById(req.query.id));
 };
 
 // Retrieve all product that belongs to the specified category
-const showCategoryProducts = async function (req, res, next) {
+async function showCategoryProducts (req, res, next) {
   const category = await ProductCategory.find({ name: req.query.name });
   const products = await Product.find({ "categories.id": category._id })
     .sort({ created_at: -1 })
