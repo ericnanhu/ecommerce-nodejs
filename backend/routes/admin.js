@@ -45,7 +45,7 @@ var {
 router.get("/user/list", listUser);
 router.get("/user/show", showUser);
 router.delete("/user/delete", deleteUser);
-router.post("/user/update", updateUser);
+router.put("/user/update", updateUser);
 
 // Shop Management
 // Admin can list, show or delete shop

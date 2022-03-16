@@ -22,7 +22,7 @@ const updateRole = async function (req, res, next) {
 };
 
 const showRole = async function (req, res, next) {
-  res.json(await Role.findById(req.query.id));
+  res.json(await Role.findById(req.query.id).populate("users"));
 };
 
 const deleteRole = async function (req, res, next) {
@@ -31,7 +31,7 @@ const deleteRole = async function (req, res, next) {
 
 // User Management ==========================================================
 const listUser = async function (req, res, next) {
-  res.json(await User.find({}).populate("shop"));
+  res.json(await User.find({}).populate("shop").populate("role", "name"));
 };
 
 // var { hashPass } = require("../../auth");
@@ -93,11 +93,11 @@ const updateUser = async function (req, res, next) {
     { new: true }
   );
 
-  res.json({ updatedOldRole, updatedNewRole, updatedUser });
+  res.json(updatedUser);
 };
 
 const showUser = async function (req, res, next) {
-  res.json(await User.findById(req.query.id).populate("shop"));
+  res.json(await User.findById(req.query.id).populate("shop").populate("role", "name"));
 };
 
 const deleteUser = async function (req, res, next) {

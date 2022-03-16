@@ -4,11 +4,13 @@ var { userSchema, roleSchema } = require("../models/user");
 mongoose.connect("mongodb://admin:password@localhost:27017/ecommerce");
 
 const User = mongoose.model("User", userSchema);
+const Role = mongoose.model("Role", roleSchema);
 
 // User Registration
 var { hashPass } = require("../auth");
 
 const userRegister = async function (req, res, next) {
+  // Check if the user exist
   if ((await User.findOne({ email: req.body.email })) !== null) {
     res.send("There is an existing account associated with this email.");
   } else {
@@ -34,7 +36,7 @@ const userRegister = async function (req, res, next) {
       { new: true }
     );
 
-    res.send({ newUser, updatedRole });
+    res.json(newUser);
   }
 };
 
@@ -50,18 +52,83 @@ const userLogin = async function (req, res, next) {
   }
 };
 
+// Change user password
+const changePass = async function (req, res, next) {
+  // Verify old password
+  const user = await User.findOne({ email: req.body.email });
+  const match = await authUser(req.body.oldPassword, user.password);
+  if (match == true) {
+    const hashedNewPass = await hashPass(req.body.newPassword);
+    const updatedUser = await User.findOneAndUpdate(
+      { email: req.body.email },
+      { password: hashedNewPass },
+      { new: true }
+    );
+    res.json(updatedUser);
+  } else {
+    res.send("Wrong password!");
+  }
+};
+
 // Show user profile
 const showUser = async function (req, res, next) {
-  res.json(await User.findById(req.query.id));
+  res.json(
+    await User.findById(req.query.id)
+      .populate("role", "name")
+      .populate("shop")
+      .populate("reviews")
+  );
 };
 
 // Update user profile
 const updateUser = async function (req, res, next) {
-  res.json(await User.findByIdAndUpdate(req.query.id, req.body, { new: true }));
+  // If there is a new avatar
+  if (req.file) {
+    await User.findByIdAndUpdate(
+      req.query.id,
+      { avatar: req.file.path },
+      { new: true }
+    );
+  }
+
+  res.json(
+    await User.findByIdAndUpdate(
+      req.query.id,
+      {
+        name: {
+          first: req.body.firstName,
+          last: req.body.lastName,
+        },
+        username: req.body.username,
+        email: req.body.email,
+        phone: req.body.phone,
+        bio: req.body.bio,
+        link: {
+          website: req.body.website,
+          facebook: req.body.facebook,
+          twitter: req.body.twitter,
+          linkedin: req.body.linkedin,
+          pinterest: req.body.pinterest,
+        },
+        address: {
+          country: req.body.country,
+          province: req.body.province,
+          city: req.body.city,
+          postCode: req.body.postCode,
+          street: req.body.street,
+        },
+      },
+      { new: true }
+    )
+      .populate("role", "name")
+      .populate("shop")
+      .populate("reviews")
+  );
 };
 module.exports = {
   userRegister,
   userLogin,
+  changePass,
   showUser,
   updateUser,
 };

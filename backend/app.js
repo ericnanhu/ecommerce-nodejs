@@ -11,6 +11,9 @@ var sellerRouter = require("./routes/seller");
 
 var app = express();
 
+// Set base dir
+global.__basedir = __dirname;
+
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
