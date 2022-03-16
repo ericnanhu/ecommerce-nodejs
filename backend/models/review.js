@@ -17,19 +17,6 @@ const reviewSchema = new Schema(
   }
 );
 
-const reviewImageSchema = new Schema(
-  {
-    image: { type: String },
-    review: { type: Schema.Types.ObjectId, ref: "Review" },
-  },
-  {
-    timestamps: {
-      createdAt: "created_at",
-    },
-  }
-);
-
 module.exports = {
   reviewSchema,
-  reviewImageSchema,
 };

@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const productSchema = new Schema(
   {
     name: { type: String, required: true },
-    images: [{ type: Schema.Types.ObjectId, ref: "ProductImage" }],
+    images: [{ type: String }],
     price: {
       number: { type: String, required: true },
       currency: { type: String, required: true },
@@ -29,18 +29,6 @@ const productSchema = new Schema(
   }
 );
 
-const productImageSchema = new Schema(
-  {
-    image: { type: String },
-    product: { type: Schema.Types.ObjectId, ref: "Product" },
-  },
-  {
-    timestamps: {
-      createdAt: "created_at",
-    },
-  }
-);
-
 const productCategorySchema = new Schema(
   {
     name: { type: String },
@@ -55,6 +43,5 @@ const productCategorySchema = new Schema(
 
 module.exports = {
   productSchema,
-  productImageSchema,
   productCategorySchema,
 };

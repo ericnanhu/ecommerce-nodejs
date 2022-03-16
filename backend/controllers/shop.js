@@ -1,9 +1,5 @@
 var mongoose = require("mongoose");
-var {
-  productSchema,
-  productImageSchema,
-  productCategorySchema,
-} = require("../models/product");
+var { productSchema, productCategorySchema } = require("../models/product");
 var { userSchema } = require("../models/user");
 var { shopSchema } = require("../models/shop");
 
@@ -11,7 +7,6 @@ mongoose.connect("mongodb://admin:password@localhost:27017/ecommerce");
 
 const User = mongoose.model("User", userSchema);
 const Product = mongoose.model("Product", productSchema);
-const ProductImage = mongoose.model("ProductImage", productImageSchema);
 const ProductCategory = mongoose.model(
   "ProductCategory",
   productCategorySchema
@@ -19,7 +14,7 @@ const ProductCategory = mongoose.model(
 const Shop = mongoose.model("Shop", shopSchema);
 
 // Create new shop
-async function createShop (req, res, next) {
+async function createShop(req, res, next) {
   const newShop = new Shop({
     name: req.body.name,
     user: req.query.userID,
@@ -30,15 +25,15 @@ async function createShop (req, res, next) {
   await User.findByIdAndUpdate(req.query.userID, { shop: newShop._id });
 
   res.json(newShop);
-};
+}
 
 // Show shop
-async function showShop (req, res, next) {
+async function showShop(req, res, next) {
   res.json(await Shop.findById(req.query.id));
-};
+}
 
 // Update Shop
-async function updateShop (req, res, next) {
+async function updateShop(req, res, next) {
   const updatedShop = await Shop.findByIdAndUpdate(
     req.query.shopID,
     {
@@ -68,10 +63,10 @@ async function updateShop (req, res, next) {
   );
 
   res.json(updatedShop);
-};
+}
 
 // Delete Shop
-async function deleteShop (req, res, next) {
+async function deleteShop(req, res, next) {
   // Delete Shop
   const deletedShop = await Shop.findByIdAndRemove(req.query.shopID);
   // Update user
@@ -79,10 +74,10 @@ async function deleteShop (req, res, next) {
     $unset: { shop: 1 },
   });
   res.json(deletedShop);
-};
+}
 
 // Create Product
-async function createProduct (req, res, next) {
+async function createProduct(req, res, next) {
   const newProduct = new Product({
     name: req.body.name,
     price: {
@@ -106,29 +101,16 @@ async function createProduct (req, res, next) {
     $push: { shop: newProduct._id },
   });
 
-  // // Add categories
-  // const categories = req.body.categories.match(/\w/g);
-  // for (category in categories) {
-  //   const productCategory = await ProductCategory.findOneAndUpdate(
-  //     { name: category },
-  //     {
-  //       $push: { products: newProduct._id },
-  //     }
-  //   );
-  //   await Product.findByIdAndUpdate(newProduct._id, {
-  //     $push: { categories: productCategory._id },
-  //   });
-  // }
   res.json(newProduct);
-};
+}
 
 // Show Product
-async function showProduct (req, res, next) {
+async function showProduct(req, res, next) {
   res.json(await Product.findById(req.query.productID));
-};
+}
 
 // Update Product
-async function updateProduct (req, res, next) {
+async function updateProduct(req, res, next) {
   const updatedProduct = await Product.findByIdAndUpdate(req.query.productID, {
     name: req.body.name,
     price: {
@@ -146,20 +128,78 @@ async function updateProduct (req, res, next) {
   });
 
   res.json(updatedProduct);
-};
+}
 
 // Delete Product
-async function deleteProduct (req, res, next) {
+async function deleteProduct(req, res, next) {
   const deletedProduct = await Product.findByIdAndRemove(req.query.productID);
   await Shop.findByIdAndUpdate(deletedProduct.shop._id, {
     $pull: { product: deletedProduct._id },
   });
   res.json(deletedProduct);
-};
+}
+
+// Add product category
+async function addProductCategory(req, res, next) {
+  // update product
+  const updatedProduct = await Product.findByIdAndUpdate(req.query.productID, {
+    $push: { categories: req.query.categoryID },
+  });
+
+  // update product category
+  await ProductCategory.findByIdAndUpdate(req.query.categoryID, {
+    $push: { products: req.query.productID },
+  });
+
+  res.json(updatedProduct);
+}
+
+// Remove product category
+async function removeProductCategory(req, res, next) {
+  // update product
+  const updatedProduct = await Product.findByIdAndUpdate(req.query.productID, {
+    $push: { categories: req.query.categoryID },
+  });
+
+  // update product category
+  await ProductCategory.findByIdAndUpdate(req.query.categoryID, {
+    $push: { products: req.query.productID },
+  });
+
+  res.json(updatedProduct);
+}
+
+// Add product image
+async function addProductImage(req, res, next) {
+  const updatedProduct = await Product.findByIdAndUpdate(
+    req.query.productID,
+    { $push: { images: req.file.path } },
+    { new: true }
+  );
+  res.json(updatedProduct);
+}
+
+// Remove product image
+async function removeProductImage(req, res, next) {
+  const updatedProduct = await Product.findByIdAndUpdate(
+    req.query.productID,
+    { $pull: { images: req.file.path } },
+    { new: true }
+  );
+  res.json(updatedProduct);
+}
 
 module.exports = {
   createShop,
   showShop,
   updateShop,
   deleteShop,
+  createProduct,
+  showProduct,
+  updateProduct,
+  deleteProduct,
+  addProductCategory,
+  removeProductCategory,
+  addProductImage,
+  removeProductImage,
 };

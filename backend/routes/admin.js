@@ -49,11 +49,7 @@ router.put("/user/update", updateUser);
 
 // Shop Management
 // Admin can list, show or delete shop
-var {
-  listShop,
-  showShop,
-  deleteShop,
-} = require("../controllers/admin/shop");
+var { listShop, showShop, deleteShop } = require("../controllers/admin/shop");
 
 router.get("/shop/list", listShop);
 router.get("/shop/show", showShop);
@@ -87,18 +83,6 @@ router.get("/product/list", listProduct);
 router.get("/product/show", showProduct);
 router.delete("/product/delete", deleteProduct);
 
-// Product Image Management
-// Admin can list, show or delete product images
-var {
-  listProductImage,
-  showProductImage,
-  deleteProductImage,
-} = require("../controllers/admin/product");
-
-router.get("/product/image/list", listProductImage);
-router.get("/product/image/show", showProductImage);
-router.delete("/product/image/delete", deleteProductImage);
-
 // Product Review Management
 // Admin can list, show or delete product reviews
 var {
@@ -110,17 +94,5 @@ var {
 router.get("/product/review/list", listReview);
 router.get("/product/review/show", showReview);
 router.delete("/product/review/delete", deleteReview);
-
-// Product Review Image Management
-// Admin can list, show or delete product review images
-var {
-  listReviewImage,
-  showReviewImage,
-  deleteReviewImage,
-} = require("../controllers/admin/review");
-
-router.get("/product/review/image/list", listReviewImage);
-router.get("/product/review/image/show", showReviewImage);
-router.delete("/product/review/image/delete", deleteReviewImage);
 
 module.exports = router;

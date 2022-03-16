@@ -1,9 +1,5 @@
 var mongoose = require("mongoose");
-var {
-  productCategorySchema,
-  productSchema,
-  productImageSchema,
-} = require("../../models/product");
+var { productCategorySchema, productSchema } = require("../../models/product");
 
 mongoose.connect("mongodb://admin:password@localhost:27017/ecommerce");
 
@@ -12,7 +8,6 @@ const ProductCategory = mongoose.model(
   productCategorySchema
 );
 const Product = mongoose.model("Product", productSchema);
-const ProductImage = mongoose.model("ProductImage", productImageSchema);
 
 async function listProductCategory(req, res, next) {
   res.json(await ProductCategory.find({}));
@@ -56,7 +51,6 @@ async function listProduct(req, res, next) {
 async function showProduct(req, res, next) {
   res.json(
     await Product.findById(req.query.id)
-      .populate("images")
       .populate("categories")
       .populate("reviews")
       .populate("shop")
@@ -65,19 +59,6 @@ async function showProduct(req, res, next) {
 
 async function deleteProduct(req, res, next) {
   res.json(await Product.findByIdAndDelete(req.query.id));
-}
-
-// Product Image Management
-async function listProductImage(req, res, next) {
-  res.json(await ProductImage.find({}).populate("product"));
-}
-
-async function showProductImage(req, res, next) {
-  res.json(await ProductImage.findById(req.query.id).populate("product"));
-}
-
-async function deleteProductImage(req, res, next) {
-  res.json(await ProductImage.findByIdAndDelete(req.query.id));
 }
 
 module.exports = {
@@ -89,7 +70,4 @@ module.exports = {
   listProduct,
   showProduct,
   deleteProduct,
-  listProductImage,
-  showProductImage,
-  deleteProductImage,
 };

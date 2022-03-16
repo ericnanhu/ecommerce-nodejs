@@ -9,7 +9,7 @@ const Role = mongoose.model("Role", roleSchema);
 // User Registration
 var { hashPass } = require("../auth");
 
-async function userRegister (req, res, next) {
+async function userRegister(req, res, next) {
   // Check if the user exist
   if ((await User.findOne({ email: req.body.email })) !== null) {
     res.send("There is an existing account associated with this email.");
@@ -38,11 +38,11 @@ async function userRegister (req, res, next) {
 
     res.json(newUser);
   }
-};
+}
 
 // User Login
 var { authUser } = require("../auth");
-async function userLogin (req, res, next) {
+async function userLogin(req, res, next) {
   const user = await User.findOne({ email: req.body.email });
   const match = await authUser(req.body.password, user.password);
   if (match == true) {
@@ -50,10 +50,10 @@ async function userLogin (req, res, next) {
   } else {
     res.send("Username or password not correct.");
   }
-};
+}
 
 // Change user password
-async function changePass (req, res, next) {
+async function changePass(req, res, next) {
   // Verify old password
   const user = await User.findOne({ email: req.body.email });
   const match = await authUser(req.body.oldPassword, user.password);
@@ -68,20 +68,20 @@ async function changePass (req, res, next) {
   } else {
     res.send("Wrong password!");
   }
-};
+}
 
 // Show user profile
-async function showUser (req, res, next) {
+async function showUser(req, res, next) {
   res.json(
     await User.findById(req.query.id)
       .populate("role", "name")
       .populate("shop")
       .populate("reviews")
   );
-};
+}
 
 // Update user profile
-async function updateUser (req, res, next) {
+async function updateUser(req, res, next) {
   // If there is a new avatar
   if (req.file) {
     await User.findByIdAndUpdate(
@@ -124,7 +124,7 @@ async function updateUser (req, res, next) {
       .populate("shop")
       .populate("reviews")
   );
-};
+}
 module.exports = {
   userRegister,
   userLogin,
