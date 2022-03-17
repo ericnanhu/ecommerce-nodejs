@@ -1,24 +1,10 @@
 var express = require("express");
 var router = express.Router();
-var {
-  createShop,
-  showShop,
-  updateShop,
-  deleteShop,
-  createProduct,
-  showProduct,
-  updateProduct,
-  deleteProduct,
-  addProductCategory,
-  removeProductCategory,
-  addProductImage,
-  removeProductImage,
-} = require("../controllers/shop");
 
-// Set up upload
 const multer = require("multer");
 const fs = require("fs");
 
+// Setup shop logo upload
 const storageShopLogo = multer.diskStorage({
   destination: function (req, file, cb) {
     const path = __basedir + `/uploads/shop/${req.query.shopID}/logo`;
@@ -33,6 +19,21 @@ const storageShopLogo = multer.diskStorage({
   },
 });
 
+const uploadShopLogo = multer({ storage: storageShopLogo });
+
+var {
+  createShop,
+  showShop,
+  updateShop,
+  deleteShop,
+} = require("../controllers/seller/shop");
+
+router.post("/create", createShop);
+router.get("/show", showShop);
+router.put("/update", uploadShopLogo.single("logo"), updateShop);
+router.delete("/delete", deleteShop);
+
+// Setup product image upload
 const storageProductImage = multer.diskStorage({
   destination: function (req, file, cb) {
     const path =
@@ -49,13 +50,18 @@ const storageProductImage = multer.diskStorage({
   },
 });
 
-const uploadShopLogo = multer({ storage: storageShopLogo });
 const uploadProductImage = multer({ storage: storageProductImage });
 
-router.post("/create", createShop);
-router.get("/show", showShop);
-router.put("/update", uploadShopLogo.single("logo"), updateShop);
-router.delete("/delete", deleteShop);
+var {
+  createProduct,
+  showProduct,
+  updateProduct,
+  deleteProduct,
+  addProductCategory,
+  removeProductCategory,
+  addProductImage,
+  removeProductImage,
+} = require("../controllers/seller/product");
 
 router.post("/product/create", createProduct);
 router.get("/product/show", showProduct);
@@ -65,7 +71,15 @@ router.delete("/product/delete", deleteProduct);
 router.post("/product/category/add", addProductCategory);
 router.post("/product/category/remove", removeProductCategory);
 
-router.post("/product/image/add", uploadProductImage.single("image"), addProductImage);
-router.post("/product/image/remove", uploadProductImage.single("image"), removeProductImage);
+router.post(
+  "/product/image/add",
+  uploadProductImage.single("image"),
+  addProductImage
+);
+router.post(
+  "/product/image/remove",
+  uploadProductImage.single("image"),
+  removeProductImage
+);
 
 module.exports = router;

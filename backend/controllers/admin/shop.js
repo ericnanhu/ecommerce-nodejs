@@ -6,7 +6,7 @@ const Shop = mongoose.model("Shop", shopSchema);
 
 // Shop Management ===================================================
 async function listShop(req, res, next) {
-  res.json(await Shop.find({}).populate("user"));
+  res.json(await Shop.find({}).populate("user", "username"));
 }
 
 async function showShop(req, res, next) {

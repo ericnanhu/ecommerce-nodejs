@@ -7,7 +7,7 @@ const reviewSchema = new Schema(
     content: { type: String, required: true },
     product: { type: Schema.Types.ObjectId, ref: "Product" },
     user: { type: Schema.Types.ObjectId, ref: "User" },
-    images: [{ type: Schema.Types.ObjectId, ref: "ReviewImage" }],
+    // images: [{ type: Schema.Types.ObjectId, ref: "ReviewImage" }],
   },
   {
     timestamps: {

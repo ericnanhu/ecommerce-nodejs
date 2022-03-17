@@ -47,14 +47,6 @@ router.get("/user/show", showUser);
 router.delete("/user/delete", deleteUser);
 router.put("/user/update", updateUser);
 
-// Shop Management
-// Admin can list, show or delete shop
-var { listShop, showShop, deleteShop } = require("../controllers/admin/shop");
-
-router.get("/shop/list", listShop);
-router.get("/shop/show", showShop);
-router.delete("/shop/delete", deleteShop);
-
 // Product Category Management
 // Admin can list, create, update, show or delete product category
 var {
@@ -70,6 +62,14 @@ router.post("/product/category/create", createProductCategory);
 router.put("/product/category/update", updateProductCategory);
 router.get("/product/category/show", showProductCategory);
 router.delete("/product/category/delete", deleteProductCategory);
+
+// Shop Management
+// Admin can list, show or delete shop
+var { listShop, showShop, deleteShop } = require("../controllers/admin/shop");
+
+router.get("/shop/list", listShop);
+router.get("/shop/show", showShop);
+router.delete("/shop/delete", deleteShop);
 
 // Product Management
 // Admin can list, show or delete product
