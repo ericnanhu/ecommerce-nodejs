@@ -23,7 +23,7 @@ async function createShop(req, res, next) {
 
 // Show shop
 async function showShop(req, res, next) {
-  res.json(await Shop.findById(req.query.shopID));
+  res.json(await Shop.findById(req.query.shopID).populate("user", "username").populate("products"));
 }
 
 // Update Shop

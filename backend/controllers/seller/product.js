@@ -33,7 +33,7 @@ async function createProduct(req, res, next) {
 
   // Add product to shop
   await Shop.findByIdAndUpdate(req.query.shopID, {
-    $push: { shop: newProduct._id },
+    $push: { products: newProduct._id },
   });
 
   res.json(newProduct);
@@ -46,21 +46,25 @@ async function showProduct(req, res, next) {
 
 // Update Product
 async function updateProduct(req, res, next) {
-  const updatedProduct = await Product.findByIdAndUpdate(req.query.productID, {
-    name: req.body.name,
-    price: {
-      number: req.body.priceNumber,
-      currency: req.body.priceCurrency,
+  const updatedProduct = await Product.findByIdAndUpdate(
+    req.query.productID,
+    {
+      name: req.body.name,
+      price: {
+        number: req.body.priceNumber,
+        currency: req.body.priceCurrency,
+      },
+      description: req.body.description,
+      address: {
+        country: req.body.country,
+        province: req.body.province,
+        city: req.body.city,
+        postCode: req.body.postCode,
+        street: req.body.street,
+      },
     },
-    description: req.body.description,
-    address: {
-      country: req.body.country,
-      province: req.body.province,
-      city: req.body.city,
-      postCode: req.body.postCode,
-      street: req.body.street,
-    },
-  });
+    { new: true }
+  );
 
   res.json(updatedProduct);
 }
