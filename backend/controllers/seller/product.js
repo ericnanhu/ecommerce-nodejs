@@ -36,6 +36,29 @@ async function createProduct(req, res, next) {
     $push: { products: newProduct._id },
   });
 
+  // Add categories
+  const categoryIDs = req.body.categories.match(/\w+/g);
+  for (const categoryID in categoryIDs) {
+    // update product
+    await Product.findByIdAndUpdate(newProduct._id, {
+      $push: { categories: categoryID },
+    });
+
+    // update product category
+    await ProductCategory.findByIdAndUpdate(categoryID, {
+      $push: { products: newProduct._id },
+    });
+  }
+
+  // Add images
+  for (const productImage in req.body.files["productImages"]) {
+    await Product.findByIdAndUpdate(
+      newProduct._id,
+      { $push: { images: productImage.path } },
+      { new: true }
+    );
+  }
+
   res.json(newProduct);
 }
 
@@ -73,7 +96,7 @@ async function updateProduct(req, res, next) {
 async function deleteProduct(req, res, next) {
   const deletedProduct = await Product.findByIdAndRemove(req.query.productID);
   await Shop.findByIdAndUpdate(deletedProduct.shop._id, {
-    $pull: { product: deletedProduct._id },
+    $pull: { products: deletedProduct._id },
   });
   res.json(deletedProduct);
 }
