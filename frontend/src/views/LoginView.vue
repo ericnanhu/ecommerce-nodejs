@@ -2,17 +2,7 @@
 
 <template>
   <main>
-    <form class="form-control w-full max-w-xs mx-auto my-32 gap-4">
-      <div>
-        <label class="label">
-          <span class="label-text">Username:</span>
-        </label>
-        <input
-          type="text"
-          placeholder="Type here"
-          class="input input-bordered w-full max-w-xs"
-        />
-      </div>
+    <form class="form-control w-full max-w-xs mx-auto my-40 gap-4">
       <div>
         <label class="label">
           <span class="label-text">Email:</span>
@@ -35,12 +25,12 @@
       </div>
 
       <button type="submit" class="btn btn-outline btn-primary w-full">
-        Register
+        Log In
       </button>
 
       <small class="text-right text-xs"
-        >Already have an account? Login
-        <router-link to="/login" class="text-primary hover:underline"
+        >Don't have an account? Register
+        <router-link to="/register" class="text-primary hover:underline"
           >Here</router-link
         >.</small
       >

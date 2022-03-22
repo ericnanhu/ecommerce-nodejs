@@ -1,265 +1,176 @@
 <script></script>
 
 <template>
-  <main class="flex flex-col md:divide-x md:flex-row">
-    <div class="order-last md:order-1 md:flex md:flex-col md:basis-1/5 md:pr-4">
-      <h2 class="underline font-semibold text-xl">Categories</h2>
-      <ul class="text-b divide-y mt-4 columns-2 sm:columns-3 md:columns-1">
-        <li class="py-2">
-          <a href="#" class="hover:underline text-primary-dark"
-            >Lorem ipsum dolor sit amet</a
-          >
-        </li>
-        <li class="py-2">
-          <a href="#" class="hover:underline text-primary-dark"
-            >Lorem, ipsum dolor.</a
-          >
-        </li>
-        <li class="py-2">
-          <a href="#" class="hover:underline text-primary-dark"
-            >Lorem ipsum dolor sit amet</a
-          >
-        </li>
-        <li class="py-2">
-          <a href="#" class="hover:underline text-primary-dark"
-            >Lorem ipsum dolor sit amet</a
-          >
-        </li>
-        <li class="py-2">
-          <a href="#" class="hover:underline text-primary-dark"
-            >Lorem, ipsum dolor.</a
-          >
-        </li>
-        <li class="py-2">
-          <a href="#" class="hover:underline text-primary-dark"
-            >Lorem ipsum dolor sit amet</a
-          >
-        </li>
-        <li class="py-2">
-          <a href="#" class="hover:underline text-primary-dark"
-            >Lorem ipsum dolor sit amet</a
-          >
-        </li>
-        <li class="py-2">
-          <a href="#" class="hover:underline text-primary-dark"
-            >Lorem, ipsum dolor.</a
-          >
-        </li>
-        <li class="py-2">
-          <a href="#" class="hover:underline text-primary-dark"
-            >Lorem ipsum dolor sit amet</a
-          >
-        </li>
-        <li class="py-2">
-          <a href="#" class="hover:underline text-primary-dark"
-            >Lorem ipsum dolor sit amet</a
-          >
-        </li>
-      </ul>
+  <main class="flex flex-col space-y-4 p-2 md:p-0">
+    <!-- Image Carousel -->
+    <div
+      class="carousel carousel-center w-full p-4 space-x-4 bg-neutral rounded-md h-fit"
+    >
+      <div class="carousel-item">
+        <img
+          src="https://api.lorem.space/image/furniture?w=250&h=180&hash=8B7BCDC2"
+          class="rounded-md"
+        />
+      </div>
+      <div class="carousel-item">
+        <img
+          src="https://api.lorem.space/image/furniture?w=250&h=180&hash=500B67FB"
+          class="rounded-md"
+        />
+      </div>
+      <div class="carousel-item">
+        <img
+          src="https://api.lorem.space/image/furniture?w=250&h=180&hash=A89D0DE6"
+          class="rounded-md"
+        />
+      </div>
+      <div class="carousel-item">
+        <img
+          src="https://api.lorem.space/image/furniture?w=250&h=180&hash=225E6693"
+          class="rounded-md"
+        />
+      </div>
+      <div class="carousel-item">
+        <img
+          src="https://api.lorem.space/image/furniture?w=250&h=180&hash=9D9539E7"
+          class="rounded-md"
+        />
+      </div>
+      <div class="carousel-item">
+        <img
+          src="https://api.lorem.space/image/furniture?w=250&h=180&hash=BDC01094"
+          class="rounded-md"
+        />
+      </div>
+      <div class="carousel-item">
+        <img
+          src="https://api.lorem.space/image/furniture?w=250&h=180&hash=7F5AE56A"
+          class="rounded-md"
+        />
+      </div>
     </div>
-    <div class="md:order-2 md:basis-4/5 md:pl-4">
-      <h2 class="underline font-semibold text-xl">Recent Products</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-4">
-        <div class="border rounded-md shadow-md">
-          <img src="/File 1.jpeg" alt="" class="object-contain rounded-t-md" />
-          <div class="m-2">
-            <h3 class="underline font-medium text-lg my-2">
-              Lorem ipsum dolor sit amet
-            </h3>
-            <p class="text-sm text-gray-500 my-2 font-serif">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem,
-              dicta? Sapiente, atque? Itaque quia aut omnis laborum expedita
-              consequatur, molestiae, sit reprehenderit repudiandae iure harum
-              corporis suscipit fugit quasi eligendi. Eligendi atque commodi
-              doloremque sapiente.
-            </p>
-            <div class="flex gap-2">
-              <router-link
-                to="/product"
-                class="my-2 border border-primary-dark rounded-md p-2 bg-primary-dark text-white focus:ring focus:ring-primary-light"
-              >
-                View Detail</router-link
-              ><button
-                class="my-2 border border-secondary-dark rounded-md p-2 text-secondary-dark focus:ring focus:ring-secondary-light"
-              >
-                Add to Cart
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="border rounded-md shadow-md">
-          <img src="/File 2.jpeg" alt="" class="object-contain rounded-t-md" />
-          <div class="m-2">
-            <h3 class="underline font-medium text-lg my-2">
-              Lorem ipsum dolor sit amet consectetur
-            </h3>
-            <p class="text-sm text-gray-500 my-2 font-serif">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem,
-              dicta? Sapiente, atque? Itaque quia aut omnis laborum expedita
-              consequatur, molestiae, sit reprehenderit repudiandae iure harum
-              corporis suscipit fugit quasi eligendi. Eligendi atque commodi
-              doloremque sapiente.
-            </p>
-            <div class="flex gap-2">
-              <router-link
-                to="/product"
-                class="my-2 border border-primary-dark rounded-md p-2 bg-primary-dark text-white focus:ring focus:ring-primary-light"
-              >
-                View Detail</router-link
-              ><button
-                class="my-2 border border-secondary-dark rounded-md p-2 text-secondary-dark focus:ring focus:ring-secondary-light"
-              >
-                Add to Cart
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="border rounded-md shadow-md">
-          <img src="/File 3.jpeg" alt="" class="object-contain rounded-t-md" />
-          <div class="m-2">
-            <h3 class="underline font-medium text-lg my-2">
-              Lorem ipsum dolor sit
-            </h3>
-            <p class="text-sm text-gray-500 my-2 font-serif">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem,
-              dicta? Sapiente, atque? Itaque quia aut omnis laborum expedita
-              consequatur, molestiae, sit reprehenderit repudiandae iure harum
-              corporis suscipit fugit quasi eligendi. Eligendi atque commodi
-              doloremque sapiente.
-            </p>
-            <div class="flex gap-2">
-              <router-link
-                to="/product"
-                class="my-2 border border-primary-dark rounded-md p-2 bg-primary-dark text-white focus:ring focus:ring-primary-light"
-              >
-                View Detail</router-link
-              ><button
-                class="my-2 border border-secondary-dark rounded-md p-2 text-secondary-dark focus:ring focus:ring-secondary-light"
-              >
-                Add to Cart
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="border rounded-md shadow-md">
-          <img src="/File 4.jpeg" alt="" class="object-contain rounded-t-md" />
-          <div class="m-2">
-            <h3 class="underline font-medium text-lg my-2">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit
-            </h3>
-            <p class="text-sm text-gray-500 my-2 font-serif">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem,
-              dicta? Sapiente, atque? Itaque quia aut omnis laborum expedita
-              consequatur, molestiae, sit reprehenderit repudiandae iure harum
-              corporis suscipit fugit quasi eligendi. Eligendi atque commodi
-              doloremque sapiente.
-            </p>
-            <div class="flex gap-2">
-              <router-link
-                to="/product"
-                class="my-2 border border-primary-dark rounded-md p-2 bg-primary-dark text-white focus:ring focus:ring-primary-light"
-              >
-                View Detail</router-link
-              ><button
-                class="my-2 border border-secondary-dark rounded-md p-2 text-secondary-dark focus:ring focus:ring-secondary-light"
-              >
-                Add to Cart
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="border rounded-md shadow-md">
-          <img src="/File 5.jpeg" alt="" class="object-contain rounded-t-md" />
-          <div class="m-2">
-            <h3 class="underline font-medium text-lg my-2">Product Number 1</h3>
-            <p class="text-sm text-gray-500 my-2 font-serif">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem,
-              dicta? Sapiente, atque? Itaque quia aut omnis laborum expedita
-              consequatur, molestiae, sit reprehenderit repudiandae iure harum
-              corporis suscipit fugit quasi eligendi. Eligendi atque commodi
-              doloremque sapiente.
-            </p>
-            <div class="flex gap-2">
-              <router-link
-                to="/product"
-                class="my-2 border border-primary-dark rounded-md p-2 bg-primary-dark text-white focus:ring focus:ring-primary-light"
-              >
-                View Detail</router-link
-              ><button
-                class="my-2 border border-secondary-dark rounded-md p-2 text-secondary-dark focus:ring focus:ring-secondary-light"
-              >
-                Add to Cart
-              </button>
-            </div>
+    <!-- Recent Products -->
+    <div class="flex flex-row flex-wrap justify-between gap-4">
+      <div class="card bg-base-100 shadow-md rounded-md md:w-96">
+        <figure>
+          <img
+            src="https://api.lorem.space/image/shoes?w=400&h=225"
+            alt="Shoes"
+          />
+        </figure>
+        <div class="card-body">
+          <h2 class="card-title">Shoes!</h2>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque
+            veritatis veniam sequi similique laborum, harum aut saepe
+            aspernatur? Neque itaque corrupti nesciunt eaque hic. Ipsam!
+          </p>
+          <div class="card-actions justify-start">
+            <router-link to="/product" class="btn btn-primary"
+              >View Details</router-link
+            >
+            <button class="btn btn-outline">Add to Cart</button>
           </div>
         </div>
       </div>
-      <h2 class="underline font-semibold text-xl">Recent Shops</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
-        <div class="border rounded-md shadow-md">
-          <img src="/File 6.jpeg" alt="" class="object-contain rounded-t-md" />
-          <div class="m-2">
-            <h3 class="underline font-medium text-lg my-2">
-              Lorem ipsum dolor sit amet
-            </h3>
-            <p class="text-sm text-gray-500 my-2 font-serif">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem,
-              dicta? Sapiente, atque? Itaque quia aut omnis laborum expedita
-              consequatur, molestiae, sit reprehenderit repudiandae iure harum
-              corporis suscipit fugit quasi eligendi. Eligendi atque commodi
-              doloremque sapiente.
-            </p>
-            <div class="flex gap-2">
-              <button
-                class="my-2 border border-primary-dark rounded-md p-2 bg-primary-dark text-white focus:ring focus:ring-primary-light"
-              >
-                Visit Shop
-              </button>
-            </div>
+      <div class="card bg-base-100 shadow-md rounded-md md:w-96">
+        <figure>
+          <img
+            src="https://api.lorem.space/image/shoes?w=400&h=225"
+            alt="Shoes"
+          />
+        </figure>
+        <div class="card-body">
+          <h2 class="card-title">Shoes!</h2>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque
+            veritatis veniam sequi similique laborum, harum aut saepe
+            aspernatur? Neque itaque corrupti nesciunt eaque hic. Ipsam!
+          </p>
+          <div class="card-actions justify-start">
+            <button class="btn btn-primary">View Details</button>
+            <button class="btn btn-outline">Add to Cart</button>
           </div>
         </div>
-        <div class="border rounded-md shadow-md">
-          <img src="/File 7.jpeg" alt="" class="object-contain rounded-t-md" />
-          <div class="m-2">
-            <h3 class="underline font-medium text-lg my-2">
-              Lorem ipsum dolor sit amet consectetur
-            </h3>
-            <p class="text-sm text-gray-500 my-2 font-serif">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem,
-              dicta? Sapiente, atque? Itaque quia aut omnis laborum expedita
-              consequatur, molestiae, sit reprehenderit repudiandae iure harum
-              corporis suscipit fugit quasi eligendi. Eligendi atque commodi
-              doloremque sapiente.
-            </p>
-            <div class="flex gap-2">
-              <button
-                class="my-2 border border-primary-dark rounded-md p-2 bg-primary-dark text-white focus:ring focus:ring-primary-light"
-              >
-                Visit Shop
-              </button>
-            </div>
+      </div>
+      <div class="card bg-base-100 shadow-md rounded-md md:w-96">
+        <figure>
+          <img
+            src="https://api.lorem.space/image/shoes?w=400&h=225"
+            alt="Shoes"
+          />
+        </figure>
+        <div class="card-body">
+          <h2 class="card-title">Shoes!</h2>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque
+            veritatis veniam sequi similique laborum, harum aut saepe
+            aspernatur? Neque itaque corrupti nesciunt eaque hic. Ipsam!
+          </p>
+          <div class="card-actions justify-start">
+            <button class="btn btn-primary">View Details</button>
+            <button class="btn btn-outline">Add to Cart</button>
           </div>
         </div>
-        <div class="border rounded-md shadow-md">
-          <img src="/File 8.jpeg" alt="" class="object-contain rounded-t-md" />
-          <div class="m-2">
-            <h3 class="underline font-medium text-lg my-2">
-              Lorem ipsum dolor sit
-            </h3>
-            <p class="text-sm text-gray-500 my-2 font-serif">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem,
-              dicta? Sapiente, atque? Itaque quia aut omnis laborum expedita
-              consequatur, molestiae, sit reprehenderit repudiandae iure harum
-              corporis suscipit fugit quasi eligendi. Eligendi atque commodi
-              doloremque sapiente.
-            </p>
-            <div class="flex gap-2">
-              <button
-                class="my-2 border border-primary-dark rounded-md p-2 bg-primary-dark text-white focus:ring focus:ring-primary-light"
-              >
-                Visit Shop
-              </button>
-            </div>
+      </div>
+    </div>
+    <div class="hero bg-neutral py-20 rounded-md shadow-md">
+      <div class="hero-content text-center">
+        <div class="max-w-md">
+          <h1 class="text-5xl font-bold text-white">Hello there</h1>
+          <p class="py-6 text-white">
+            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
+            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
+            a id nisi.
+          </p>
+          <button class="btn btn-primary">Get Started</button>
+        </div>
+      </div>
+    </div>
+    <!-- Shops -->
+    <div class="flex flex-row flex-wrap gap-4 justify-between">
+      <div class="card w-96 bg-base-100 image-full shadow-md">
+        <figure>
+          <img
+            src="https://api.lorem.space/image/shoes?w=400&h=225"
+            alt="Shoes"
+          />
+        </figure>
+        <div class="card-body">
+          <h2 class="card-title">Shoes!</h2>
+          <p>If a dog chews shoes whose shoes does he choose?</p>
+          <div class="card-actions justify-end">
+            <button class="btn btn-primary">Buy Now</button>
+          </div>
+        </div>
+      </div>
+      <div class="card w-96 bg-base-100 image-full shadow-md">
+        <figure>
+          <img
+            src="https://api.lorem.space/image/shoes?w=400&h=225"
+            alt="Shoes"
+          />
+        </figure>
+        <div class="card-body">
+          <h2 class="card-title">Shoes!</h2>
+          <p>If a dog chews shoes whose shoes does he choose?</p>
+          <div class="card-actions justify-end">
+            <button class="btn btn-primary">Buy Now</button>
+          </div>
+        </div>
+      </div>
+      <div class="card w-96 bg-base-100 image-full shadow-md">
+        <figure>
+          <img
+            src="https://api.lorem.space/image/shoes?w=400&h=225"
+            alt="Shoes"
+          />
+        </figure>
+        <div class="card-body">
+          <h2 class="card-title">Shoes!</h2>
+          <p>If a dog chews shoes whose shoes does he choose?</p>
+          <div class="card-actions justify-end">
+            <button class="btn btn-primary">Buy Now</button>
           </div>
         </div>
       </div>
