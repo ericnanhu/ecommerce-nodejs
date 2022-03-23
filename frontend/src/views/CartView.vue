@@ -2,7 +2,7 @@
 
 <template>
   <main class="flex flex-col space-y-4 mx-2 md:mx-0">
-    <div class="overflow-x-auto">
+    <div class="overflow-x-auto my-8">
       <table class="table w-full">
         <!-- head -->
         <thead>
@@ -102,7 +102,11 @@
             <th></th>
             <th>20</th>
             <th>$ 800</th>
-            <th><button class="btn btn-primary w-full">Check Out</button></th>
+            <th>
+              <router-link to="/checkout" class="btn btn-primary w-full"
+                >Check Out</router-link
+              >
+            </th>
           </tr>
         </tfoot>
       </table>
