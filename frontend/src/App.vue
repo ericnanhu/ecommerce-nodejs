@@ -3,6 +3,7 @@ export default {
   data() {
     return {
       loggedIn: false,
+      isSeller: true,
     };
   },
 };
@@ -96,12 +97,15 @@ export default {
           class="menu menu-compact dropdown-content mt-3 p-2 shadow-md bg-base-100 rounded-md w-52"
         >
           <li>
-            <a class="justify-between">
-              Profile
-              <span class="badge">New</span>
-            </a>
+            <router-link to="/profile" class="justify-between"
+              >Profile</router-link
+            >
           </li>
-          <li><a>Settings</a></li>
+          <li v-if="this.isSeller == true">
+            <router-link to="/dashboard" class="justify-between"
+              >Dashboard</router-link
+            >
+          </li>
           <li><a @click="loggedIn = !loggedIn">Logout</a></li>
         </ul>
       </div>

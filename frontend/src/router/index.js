@@ -39,6 +39,16 @@ const router = createRouter({
       name: "CheckOut",
       component: () => import("../views/CheckOutView.vue"),
     },
+    {
+      path: "/profile",
+      name: "Profile",
+      component: () => import("../views/UserProfileView.vue"),
+    },
+    {
+      path: "/dashboard",
+      name: "Dashboard",
+      component: () => import("../views/DashboardView.vue"),
+    },
   ],
 });
 
