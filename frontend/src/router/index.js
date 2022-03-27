@@ -49,6 +49,23 @@ const router = createRouter({
       name: "Dashboard",
       component: () => import("../views/DashboardView.vue"),
     },
+    {
+      path: "/admin",
+      name: "Admin",
+      component: () => import("../views/admin/AdminView.vue"),
+      children: [
+        {
+          path: "",
+          name: "AdminHome",
+          component: () => import("../views/admin/HomeView.vue"),
+        },
+        {
+          path: "role",
+          name: "AdminRoleManage",
+          component: () => import("../views/admin/RoleManageView.vue"),
+        },
+      ],
+    },
   ],
 });
 

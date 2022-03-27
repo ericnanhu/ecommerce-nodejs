@@ -2,8 +2,9 @@
 export default {
   data() {
     return {
-      loggedIn: false,
+      loggedIn: true,
       isSeller: true,
+      isAdmin: true,
     };
   },
 };
@@ -104,6 +105,11 @@ export default {
           <li v-if="this.isSeller == true">
             <router-link to="/dashboard" class="justify-between"
               >Dashboard</router-link
+            >
+          </li>
+          <li v-if="this.isAdmin == true">
+            <router-link to="/admin" class="justify-between"
+              >Admin Panel</router-link
             >
           </li>
           <li><a @click="loggedIn = !loggedIn">Logout</a></li>
