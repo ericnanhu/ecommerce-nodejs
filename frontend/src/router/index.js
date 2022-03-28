@@ -62,7 +62,27 @@ const router = createRouter({
         {
           path: "role",
           name: "AdminRoleManage",
-          component: () => import("../views/admin/RoleManageView.vue"),
+          component: () => import("../views/admin/RoleManage.vue"),
+        },
+        {
+          path: "user",
+          name: "AdminUserManage",
+          component: () => import("../views/admin/UserManage.vue"),
+        },
+        {
+          path: "shop",
+          name: "AdminShopManage",
+          component: () => import("../views/admin/ShopManage.vue"),
+        },
+        {
+          path: "product",
+          name: "AdminProductManage",
+          component: () => import("../views/admin/ProductManage.vue"),
+        },
+        {
+          path: "review",
+          name: "AdminReviewManage",
+          component: () => import("../views/admin/ReviewManage.vue"),
         },
       ],
     },

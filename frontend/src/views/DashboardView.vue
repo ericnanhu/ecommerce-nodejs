@@ -1,7 +1,7 @@
 <script></script>
 
 <template>
-  <main class="flex flex-col space-y-4 mx-2 md:mx-0">
+  <main class="flex flex-col mx-2 md:mx-0">
     <div>
       <div class="flex space-x-4 items-center justify-between">
         <h2 class="font-bold text-2xl flex flex-col space-y-4">My Shop</h2>

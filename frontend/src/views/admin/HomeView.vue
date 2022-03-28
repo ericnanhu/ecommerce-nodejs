@@ -57,56 +57,6 @@
                 class="input input-bordered w-full"
               />
             </div>
-            <div class="form-control w-full">
-              <label class="label">
-                <span class="label-text">Input 3</span>
-              </label>
-              <input
-                type="text"
-                placeholder="Type here"
-                class="input input-bordered w-full"
-              />
-            </div>
-            <div class="form-control w-full">
-              <label class="label">
-                <span class="label-text">Input 4</span>
-              </label>
-              <input
-                type="text"
-                placeholder="Type here"
-                class="input input-bordered w-full"
-              />
-            </div>
-            <div class="form-control w-full">
-              <label class="label">
-                <span class="label-text">Input 5</span>
-              </label>
-              <input
-                type="text"
-                placeholder="Type here"
-                class="input input-bordered w-full"
-              />
-            </div>
-            <div class="form-control w-full">
-              <label class="label">
-                <span class="label-text">Input 6</span>
-              </label>
-              <input
-                type="text"
-                placeholder="Type here"
-                class="input input-bordered w-full"
-              />
-            </div>
-            <div class="form-control w-full">
-              <label class="label">
-                <span class="label-text">Input 7</span>
-              </label>
-              <input
-                type="text"
-                placeholder="Type here"
-                class="input input-bordered w-full"
-              />
-            </div>
           </form>
           <div class="modal-action">
             <label for="my-modal" class="btn btn-primary">Yay!</label>
@@ -119,7 +69,7 @@
       <h2 class="font-bold text-2xl">Management</h2>
 
       <div class="divider"></div>
-      <div class="flex flex-row flex-wrap gap-4 justify-between">
+      <div class="flex flex-row flex-wrap gap-4 justify-start">
         <div class="card w-96 bg-base-100 shadow-md rounded-md">
           <div class="card-body">
             <h2 class="card-title">Role Management</h2>
@@ -133,10 +83,10 @@
         </div>
         <div class="card w-96 bg-base-100 shadow-md rounded-md">
           <div class="card-body">
-            <h2 class="card-title">Role Management</h2>
-            <p>Create, Read, Update and Delete Roles.</p>
+            <h2 class="card-title">User Management</h2>
+            <p>Read and Delete Users.</p>
             <div class="card-actions justify-end">
-              <router-link to="/admin/role" class="btn btn-primary"
+              <router-link to="/admin/user" class="btn btn-primary"
                 >Go</router-link
               >
             </div>
@@ -144,10 +94,10 @@
         </div>
         <div class="card w-96 bg-base-100 shadow-md rounded-md">
           <div class="card-body">
-            <h2 class="card-title">Role Management</h2>
-            <p>Create, Read, Update and Delete Roles.</p>
+            <h2 class="card-title">Shop Management</h2>
+            <p>Read and Delete Shops.</p>
             <div class="card-actions justify-end">
-              <router-link to="/admin/role" class="btn btn-primary"
+              <router-link to="/admin/shop" class="btn btn-primary"
                 >Go</router-link
               >
             </div>
@@ -155,10 +105,10 @@
         </div>
         <div class="card w-96 bg-base-100 shadow-md rounded-md">
           <div class="card-body">
-            <h2 class="card-title">Role Management</h2>
-            <p>Create, Read, Update and Delete Roles.</p>
+            <h2 class="card-title">Product Management</h2>
+            <p>Read and Delete Products.</p>
             <div class="card-actions justify-end">
-              <router-link to="/admin/role" class="btn btn-primary"
+              <router-link to="/admin/product" class="btn btn-primary"
                 >Go</router-link
               >
             </div>
@@ -166,21 +116,10 @@
         </div>
         <div class="card w-96 bg-base-100 shadow-md rounded-md">
           <div class="card-body">
-            <h2 class="card-title">Role Management</h2>
-            <p>Create, Read, Update and Delete Roles.</p>
+            <h2 class="card-title">Review Management</h2>
+            <p>Read and Delete Reviews.</p>
             <div class="card-actions justify-end">
-              <router-link to="/admin/role" class="btn btn-primary"
-                >Go</router-link
-              >
-            </div>
-          </div>
-        </div>
-        <div class="card w-96 bg-base-100 shadow-md rounded-md">
-          <div class="card-body">
-            <h2 class="card-title">Role Management</h2>
-            <p>Create, Read, Update and Delete Roles.</p>
-            <div class="card-actions justify-end">
-              <router-link to="/admin/role" class="btn btn-primary"
+              <router-link to="/admin/review" class="btn btn-primary"
                 >Go</router-link
               >
             </div>
