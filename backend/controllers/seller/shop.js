@@ -41,7 +41,11 @@ async function createShop(req, res, next) {
 
 // Show shop
 async function showShop(req, res, next) {
-  res.json(await Shop.findById(req.query.shopID).populate("products"));
+  if (req.query.withProducts == true) {
+    res.json(await Shop.findById(req.query.shopID).populate("products"));
+  } else {
+    res.json(await Shop.findById(req.query.shopID));
+  }
 }
 
 // Update Shop
@@ -52,22 +56,19 @@ async function updateShop(req, res, next) {
     // console.log(path);
     await Shop.findByIdAndUpdate(req.query.shopID, { logo: path });
   }
-  const updatedShop = await Shop.findByIdAndUpdate(
-    req.query.shopID,
-    {
-      name: req.body.name,
-      phone: req.body.phone,
-      email: req.body.email,
-      description: req.body.description,
-      address: {
-        country: req.body.country,
-        province: req.body.province,
-        city: req.body.city,
-        postCode: req.body.postCode,
-        street: req.body.street,
-      },
+  const updatedShop = await Shop.findByIdAndUpdate(req.query.shopID, {
+    name: req.body.name,
+    phone: req.body.phone,
+    email: req.body.email,
+    description: req.body.description,
+    address: {
+      country: req.body.country,
+      province: req.body.province,
+      city: req.body.city,
+      postCode: req.body.postCode,
+      street: req.body.street,
     },
-  );
+  });
 
   res.send("Shop Updated!");
 }

@@ -26,7 +26,7 @@ var {
   removeProductImage,
 } = require("../controllers/seller/product");
 
-router.post("/product/create", uploadProductImage.array("productImages"), createProduct);
+router.post("/product/create", uploadProductImage.array("images"), createProduct);
 router.get("/product/show", showProduct);
 router.put("/product/update", updateProduct);
 router.delete("/product/delete", deleteProduct);

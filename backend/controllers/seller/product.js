@@ -15,10 +15,7 @@ const Shop = mongoose.model("Shop", shopSchema);
 async function createProduct(req, res, next) {
   const newProduct = new Product({
     name: req.body.name,
-    price: {
-      number: req.body.priceNumber,
-      currency: req.body.priceCurrency,
-    },
+    price: req.body.price,
     description: req.body.description,
     address: {
       country: req.body.country,
@@ -51,7 +48,7 @@ async function createProduct(req, res, next) {
   }
 
   // Add images
-  for (const productImage in req.body.files["productImages"]) {
+  for (const productImage in req.body.files["images"]) {
     await Product.findByIdAndUpdate(
       newProduct._id,
       { $push: { images: productImage.path } },

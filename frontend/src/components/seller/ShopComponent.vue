@@ -65,6 +65,7 @@ export default {
           url: "/seller/shop/show",
           params: {
             shopID: this.shopID,
+            withProducts: false,
           },
         });
 
