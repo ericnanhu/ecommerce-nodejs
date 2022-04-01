@@ -9,39 +9,11 @@ export default {
 
   data() {
     return {
-      shop: {
+      products: {},
+      createProduct: {
         name: "",
-        logo: "",
-        phone: "",
-        email: "",
-        description: "",
-        address: {
-          country: "",
-          province: "",
-          city: "",
-          postCode: "",
-          street: "",
-        },
-      },
-      createShop: {
-        name: "",
-        logo: "",
-        phone: "",
-        email: "",
-        description: "",
-        address: {
-          country: "",
-          province: "",
-          city: "",
-          postCode: "",
-          street: "",
-        },
-      },
-      updateShop: {
-        name: "",
-        logo: "",
-        phone: "",
-        email: "",
+        images: [],
+        price: "",
         description: "",
         address: {
           country: "",
@@ -56,41 +28,36 @@ export default {
 
   async created() {
     try {
-      // If user has a Shop
-      if (this.hasShop) {
-        const shop = await axios({
-          baseURL: import.meta.env.VITE_BACKENDURL,
-          method: "get",
-          url: "/seller/shop/show",
-          params: {
-            shopID: this.shopID,
-          },
-        });
-
-        this.shop = shop.data;
-        this.updateShop = shop.data;
-        // console.log(this.shop);
-      }
+      // Get all products that belong to the shop.
+      const shop = await axios({
+        baseURL: import.meta.env.VITE_BACKENDURL,
+        method: "get",
+        url: "/seller/shop/show",
+        params: {
+          shopID: this.shopID,
+          withProducts: true,
+        },
+      });
+      this.products = shop.data.products;
     } catch (e) {
       console.log(e);
     }
   },
 
   methods: {
-    async createShopForm() {
+    async createProductForm() {
       try {
         const formData = new FormData();
 
-        formData.append("name", this.createShop.name);
-        formData.append("logo", this.createShop.logo);
-        formData.append("email", this.createShop.email);
-        formData.append("phone", this.createShop.phone);
-        formData.append("description", this.createShop.description);
-        formData.append("country", this.createShop.address.country);
-        formData.append("province", this.createShop.address.province);
-        formData.append("city", this.createShop.address.city);
-        formData.append("street", this.createShop.address.street);
-        formData.append("postCode", this.createShop.address.postCode);
+        formData.append("name", this.createProduct.name);
+        formData.append("images", this.createProduct.images);
+        formData.append("price", this.createProduct.price);
+        formData.append("description", this.createProduct.description);
+        formData.append("country", this.createProduct.address.country);
+        formData.append("province", this.createProduct.address.province);
+        formData.append("city", this.createProduct.address.city);
+        formData.append("street", this.createProduct.address.street);
+        formData.append("postCode", this.createProduct.address.postCode);
 
         await axios({
           baseURL: import.meta.env.VITE_BACKENDURL,
@@ -330,7 +297,7 @@ export default {
       </div>
     </div>
 
-    <div class="btn-group mx-auto my-10" v-if="this.user.hasShop == true">
+    <div class="btn-group mx-auto my-10">
       <button class="btn btn-outline">«</button>
       <button class="btn btn-outline">1</button>
       <button class="btn btn-outline btn-active">2</button>
