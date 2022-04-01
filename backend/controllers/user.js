@@ -25,6 +25,17 @@ async function userRegister(req, res, next) {
       email: req.body.email,
       password: hashedPass,
       role: userRole._id,
+
+      name: "",
+      avatar: "",
+      phone: "",
+      address: {
+        country: "",
+        province: "",
+        city: "",
+        postCode: "",
+        street: "",
+      },
     });
 
     newUser.save();
@@ -42,11 +53,20 @@ async function userRegister(req, res, next) {
 
 // User Login
 var { authUser } = require("../auth");
+const jwt = require("jsonwebtoken");
+
 async function userLogin(req, res, next) {
-  const user = await User.findOne({ email: req.body.email });
+  const user = await User.findOne({ email: req.body.email }).populate("role");
   const match = await authUser(req.body.password, user.password);
   if (match == true) {
-    res.send("User Verified!");
+    const token = jwt.sign(
+      {
+        id: user._id,
+        role: user.role.name,
+      },
+      process.env.JWT_KEY
+    );
+    res.json(token);
   } else {
     res.send("Username or password not correct.");
   }
@@ -73,43 +93,33 @@ async function changePass(req, res, next) {
 // Show user profile
 async function showUser(req, res, next) {
   res.json(
-    await User.findById(req.query.id)
-      .populate("role", "name")
-      .populate("shop")
-      .populate("reviews")
+    await User.findById(req.query.userID).select(
+      "-password -role"
+    )
   );
 }
 
 // Update user profile
 async function updateUser(req, res, next) {
-  // If there is a new avatar
-  if (req.file) {
-    await User.findByIdAndUpdate(
-      req.query.id,
-      { avatar: req.file.path },
-      { new: true }
-    );
-  }
+  try {
+    // If there is a new avatar
+    if (req.file) {
+      const path = /(\/uploads)(.+)/g.exec(req.file.path)[0];
+      // console.log(path);
+      await User.findByIdAndUpdate(
+        req.query.userID,
+        { avatar: path },
+        { new: true }
+      );
+    }
 
-  res.json(
     await User.findByIdAndUpdate(
-      req.query.id,
+      req.query.userID,
       {
-        name: {
-          first: req.body.firstName,
-          last: req.body.lastName,
-        },
+        name: req.body.name,
         username: req.body.username,
         email: req.body.email,
         phone: req.body.phone,
-        bio: req.body.bio,
-        link: {
-          website: req.body.website,
-          facebook: req.body.facebook,
-          twitter: req.body.twitter,
-          linkedin: req.body.linkedin,
-          pinterest: req.body.pinterest,
-        },
         address: {
           country: req.body.country,
           province: req.body.province,
@@ -119,11 +129,12 @@ async function updateUser(req, res, next) {
         },
       },
       { new: true }
-    )
-      .populate("role", "name")
-      .populate("shop")
-      .populate("reviews")
-  );
+    );
+
+    res.send("User Updated!");
+  } catch (e) {
+    console.log(e);
+  }
 }
 module.exports = {
   userRegister,

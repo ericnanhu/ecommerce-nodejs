@@ -12,7 +12,7 @@ const fileName = function (req, file, cb) {
 // Storage
 const storageShopLogo = multer.diskStorage({
   destination: function (req, file, cb) {
-    const path = __basedir + `/uploads/shop/${req.query.shopID}/logo`;
+    const path = process.env.PUBLIC_DIR + `/uploads/shop/${req.query.shopID}/logo`;
     fs.mkdirSync(path, { recursive: true });
     return cb(null, path);
   },
@@ -22,7 +22,7 @@ const storageShopLogo = multer.diskStorage({
 const storageProductImage = multer.diskStorage({
   destination: function (req, file, cb) {
     const path =
-      __basedir +
+      process.env.PUBLIC_DIR +
       `/uploads/shop/${req.query.shopID}/product/${req.query.productID}/images`;
     fs.mkdirSync(path, { recursive: true });
     return cb(null, path);
@@ -32,7 +32,7 @@ const storageProductImage = multer.diskStorage({
 
 const storageUserAvatar = multer.diskStorage({
   destination: function (req, file, cb) {
-    const path = __basedir + `/uploads/user/${req.query.id}/avatar`;
+    const path = process.env.PUBLIC_DIR + `/uploads/user/${req.query.userID}/avatar`;
     fs.mkdirSync(path, { recursive: true });
     return cb(null, path);
   },

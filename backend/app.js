@@ -4,6 +4,7 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 var cors = require("cors");
+require("dotenv").config();
 
 var mainRouter = require("./routes/main");
 var userRouter = require("./routes/user");
@@ -15,7 +16,11 @@ var app = express();
 // Set base dir
 global.__basedir = __dirname;
 
-app.use(cors());
+var corsOptions = {
+  origin: 'http://localhost:8080', // Matches the frontend
+  optionsSuccessStatus: 200
+}
+app.use(cors(corsOptions));
 
 app.use(logger("dev"));
 app.use(express.json());

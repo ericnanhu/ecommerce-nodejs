@@ -1,219 +1,159 @@
-<script></script>
+<script>
+import axios from "axios";
+
+export default {
+  props: {
+    userID: String,
+    shopID: String,
+  },
+
+  data() {
+    return {
+      shop: {
+        name: "",
+        logo: "",
+        phone: "",
+        email: "",
+        description: "",
+        address: {
+          country: "",
+          province: "",
+          city: "",
+          postCode: "",
+          street: "",
+        },
+      },
+      createShop: {
+        name: "",
+        logo: "",
+        phone: "",
+        email: "",
+        description: "",
+        address: {
+          country: "",
+          province: "",
+          city: "",
+          postCode: "",
+          street: "",
+        },
+      },
+      updateShop: {
+        name: "",
+        logo: "",
+        phone: "",
+        email: "",
+        description: "",
+        address: {
+          country: "",
+          province: "",
+          city: "",
+          postCode: "",
+          street: "",
+        },
+      },
+    };
+  },
+
+  async created() {
+    try {
+      // If user has a Shop
+      if (this.hasShop) {
+        const shop = await axios({
+          baseURL: import.meta.env.VITE_BACKENDURL,
+          method: "get",
+          url: "/seller/shop/show",
+          params: {
+            shopID: this.shopID,
+          },
+        });
+
+        this.shop = shop.data;
+        this.updateShop = shop.data;
+        // console.log(this.shop);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  methods: {
+    async createShopForm() {
+      try {
+        const formData = new FormData();
+
+        formData.append("name", this.createShop.name);
+        formData.append("logo", this.createShop.logo);
+        formData.append("email", this.createShop.email);
+        formData.append("phone", this.createShop.phone);
+        formData.append("description", this.createShop.description);
+        formData.append("country", this.createShop.address.country);
+        formData.append("province", this.createShop.address.province);
+        formData.append("city", this.createShop.address.city);
+        formData.append("street", this.createShop.address.street);
+        formData.append("postCode", this.createShop.address.postCode);
+
+        await axios({
+          baseURL: import.meta.env.VITE_BACKENDURL,
+          method: "post",
+          url: "/seller/shop/create",
+          params: {
+            userID: this.userID,
+          },
+          headers: { "Content-Type": "multipart/form-data" },
+          data: formData,
+        });
+
+        window.location.reload();
+      } catch (e) {
+        console.log(e);
+      }
+    },
+
+    onChangeLogoUploadCreate(event) {
+      this.createShop.logo = event.target.files[0];
+    },
+
+    async updateShopForm() {
+      try {
+        const formData = new FormData();
+
+        formData.append("name", this.updateShop.name);
+        formData.append("logo", this.updateShop.logo);
+        formData.append("email", this.updateShop.email);
+        formData.append("phone", this.updateShop.phone);
+        formData.append("description", this.updateShop.description);
+        formData.append("country", this.updateShop.address.country);
+        formData.append("province", this.updateShop.address.province);
+        formData.append("city", this.updateShop.address.city);
+        formData.append("street", this.updateShop.address.street);
+        formData.append("postCode", this.updateShop.address.postCode);
+
+        await axios({
+          baseURL: import.meta.env.VITE_BACKENDURL,
+          method: "put",
+          url: "/seller/shop/update",
+          params: {
+            shopID: this.shopID,
+          },
+          headers: { "Content-Type": "multipart/form-data" },
+          data: formData,
+        });
+
+        window.location.reload();
+      } catch (e) {
+        console.log(e);
+      }
+    },
+
+    onChangeLogoUploadUpdate(event) {
+      this.updateShop.logo = event.target.files[0];
+    },
+  },
+};
+</script>
 
 <template>
-  <main class="flex flex-col mx-2 md:mx-0">
-    <div>
-      <div class="flex space-x-4 items-center justify-between">
-        <h2 class="font-bold text-2xl flex flex-col space-y-4">My Shop</h2>
-        <label for="createShop" class="btn btn-primary">Create New Shop</label>
-      </div>
-
-      <div class="divider"></div>
-      <div class="overflow-x-auto">
-        <table class="table w-full">
-          <!-- head -->
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Number of Products</th>
-              <th>Description</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="hover">
-              <td>Shop Name</td>
-              <td>20</td>
-              <td class="whitespace-normal">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex
-                veniam, reiciendis, aliquam nobis ipsa exercitationem cum
-                aperiam itaque dolores explicabo, voluptates eos! Voluptatum sit
-                delectus molestias fugit, adipisci dicta temporibus.
-              </td>
-              <td class="flex space-x-2">
-                <button class="btn btn-outline btn-error">Delete</button>
-                <label for="updateShop" class="btn">Update</label>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <input type="checkbox" id="createShop" class="modal-toggle" />
-    <div class="modal">
-      <div class="modal-box w-11/12 max-w-5xl">
-        <label
-          for="createShop"
-          class="btn btn-sm btn-circle absolute right-2 top-2"
-          >✕</label
-        >
-        <h3 class="font-bold text-lg">Create Shop</h3>
-        <div class="divider"></div>
-        <form action="POST">
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text">Input 1</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Type here"
-              class="input input-bordered w-full"
-            />
-          </div>
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text">Input 2</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Type here"
-              class="input input-bordered w-full"
-            />
-          </div>
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text">Input 3</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Type here"
-              class="input input-bordered w-full"
-            />
-          </div>
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text">Input 4</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Type here"
-              class="input input-bordered w-full"
-            />
-          </div>
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text">Input 5</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Type here"
-              class="input input-bordered w-full"
-            />
-          </div>
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text">Input 6</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Type here"
-              class="input input-bordered w-full"
-            />
-          </div>
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text">Input 7</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Type here"
-              class="input input-bordered w-full"
-            />
-          </div>
-        </form>
-        <div class="modal-action">
-          <label for="my-modal" class="btn btn-primary">Yay!</label>
-        </div>
-      </div>
-    </div>
-
-    <input type="checkbox" id="updateShop" class="modal-toggle" />
-    <div class="modal">
-      <div class="modal-box w-11/12 max-w-5xl">
-        <label
-          for="updateShop"
-          class="btn btn-sm btn-circle absolute right-2 top-2"
-          >✕</label
-        >
-        <h3 class="font-bold text-lg">Update Shop</h3>
-        <div class="divider"></div>
-        <form action="POST">
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text">Input 1</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Type here"
-              class="input input-bordered w-full"
-            />
-          </div>
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text">Input 2</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Type here"
-              class="input input-bordered w-full"
-            />
-          </div>
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text">Input 3</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Type here"
-              class="input input-bordered w-full"
-            />
-          </div>
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text">Input 4</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Type here"
-              class="input input-bordered w-full"
-            />
-          </div>
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text">Input 5</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Type here"
-              class="input input-bordered w-full"
-            />
-          </div>
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text">Input 6</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Type here"
-              class="input input-bordered w-full"
-            />
-          </div>
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text">Input 7</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Type here"
-              class="input input-bordered w-full"
-            />
-          </div>
-        </form>
-        <div class="modal-action">
-          <label for="my-modal" class="btn btn-primary">Yay!</label>
-        </div>
-      </div>
-    </div>
+  <div>
     <div>
       <div class="flex space-x-4 items-center justify-between">
         <h2 class="font-bold text-2xl flex flex-col space-y-4">My Products</h2>
@@ -390,7 +330,7 @@
       </div>
     </div>
 
-    <div class="btn-group mx-auto my-10">
+    <div class="btn-group mx-auto my-10" v-if="this.user.hasShop == true">
       <button class="btn btn-outline">«</button>
       <button class="btn btn-outline">1</button>
       <button class="btn btn-outline btn-active">2</button>
@@ -574,5 +514,5 @@
         </div>
       </div>
     </div>
-  </main>
+  </div>
 </template>

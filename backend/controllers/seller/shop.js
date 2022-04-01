@@ -12,37 +12,53 @@ async function createShop(req, res, next) {
   const newShop = new Shop({
     name: req.body.name,
     user: req.query.userID,
+    phone: req.body.phone,
+    email: req.body.email,
+    description: req.body.description,
+    address: {
+      country: req.body.country,
+      province: req.body.province,
+      city: req.body.city,
+      postCode: req.body.postCode,
+      street: req.body.street,
+    },
   });
+
   newShop.save();
+
+  // If there is a new logo
+  if (req.file) {
+    const path = /(\/uploads)(.+)/g.exec(req.file.path)[0];
+    // console.log(path);
+    await Shop.findByIdAndUpdate(newShop._id, { logo: path });
+  }
 
   // Add shop to the user
   await User.findByIdAndUpdate(req.query.userID, { shop: newShop._id });
 
-  res.json(newShop);
+  res.send("Shop Created!");
 }
 
 // Show shop
 async function showShop(req, res, next) {
-  res.json(await Shop.findById(req.query.shopID).populate("user", "username").populate("products"));
+  res.json(await Shop.findById(req.query.shopID).populate("products"));
 }
 
 // Update Shop
 async function updateShop(req, res, next) {
+  // If there is a new logo
+  if (req.file) {
+    const path = /(\/uploads)(.+)/g.exec(req.file.path)[0];
+    // console.log(path);
+    await Shop.findByIdAndUpdate(req.query.shopID, { logo: path });
+  }
   const updatedShop = await Shop.findByIdAndUpdate(
     req.query.shopID,
     {
       name: req.body.name,
-      logo: req.file.path,
       phone: req.body.phone,
       email: req.body.email,
       description: req.body.description,
-      link: {
-        website: req.body.website,
-        facebook: req.body.facebook,
-        twitter: req.body.twitter,
-        linkedin: req.body.linkedin,
-        pinterest: req.body.pinterest,
-      },
       address: {
         country: req.body.country,
         province: req.body.province,
@@ -51,12 +67,9 @@ async function updateShop(req, res, next) {
         street: req.body.street,
       },
     },
-    {
-      new: true,
-    }
   );
 
-  res.json(updatedShop);
+  res.send("Shop Updated!");
 }
 
 // Delete Shop

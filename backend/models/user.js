@@ -8,23 +8,12 @@ const roleSchema = new Schema({
 
 const userSchema = new Schema(
   {
-    name: {
-      first: { type: String },
-      last: { type: String },
-    },
+    name: { type: String },
     avatar: { type: String },
     username: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
     phone: { type: String },
-    bio: { type: String },
-    link: {
-      website: { type: String },
-      facebook: { type: String },
-      twitter: { type: String },
-      linkedin: { type: String },
-      pinterest: { type: String },
-    },
     address: {
       country: { type: String },
       province: { type: String },

@@ -8,13 +8,6 @@ const shopSchema = new Schema(
     phone: { type: String },
     email: { type: String },
     description: { type: String },
-    link: {
-      website: { type: String },
-      facebook: { type: String },
-      twitter: { type: String },
-      linkedin: { type: String },
-      pinterest: { type: String },
-    },
     address: {
       country: { type: String },
       province: { type: String },

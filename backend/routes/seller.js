@@ -10,9 +10,9 @@ var {
   deleteShop,
 } = require("../controllers/seller/shop");
 
-router.post("/shop/create", uploadShopLogo.single("shopLogo"), createShop);
+router.post("/shop/create", uploadShopLogo.single("logo"), createShop);
 router.get("/shop/show", showShop);
-router.put("/shop/update", uploadShopLogo.single("shopLogo"), updateShop);
+router.put("/shop/update", uploadShopLogo.single("logo"), updateShop);
 router.delete("/shop/delete", deleteShop);
 
 var {

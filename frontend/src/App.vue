@@ -1,11 +1,57 @@
 <script>
+import axios from "axios";
+import { useUserStore } from "@/stores/user";
+
 export default {
+  setup() {
+    const userStore = useUserStore();
+    return { userStore };
+  },
   data() {
     return {
-      loggedIn: true,
-      isSeller: true,
-      isAdmin: true,
+      user: {
+        isLoggedIn: false,
+        token: this.userStore.getToken || "",
+        role: "",
+        id: "",
+        email: "",
+        username: "",
+        avatar: "",
+      },
     };
+  },
+  async created() {
+    if (this.user.token) {
+      this.user.isLoggedIn = true;
+
+      const tokenUser = this.userStore.getUser;
+      this.user.role = tokenUser.role;
+      this.user.id = tokenUser.id;
+
+      const user = await axios({
+        baseURL: import.meta.env.VITE_BACKENDURL,
+        method: "get",
+        url: "/user/show",
+        params: {
+          userID: this.user.id,
+        },
+      });
+
+      this.user.email = user.data.email;
+      this.user.username = user.data.username;
+      this.user.avatar = user.data.avatar;
+    }
+  },
+  methods: {
+    logOut() {
+      try {
+        this.userStore.removeToken();
+        this.user.isLoggedIn = false;
+        console.log(this.userStore.getToken);
+      } catch (e) {
+        console.log(e);
+      }
+    },
   },
 };
 </script>
@@ -82,15 +128,17 @@ export default {
       <router-link
         to="/login"
         class="btn btn-ghost normal-case text-base"
-        :class="{ hidden: loggedIn }"
-        @click="loggedIn = !loggedIn"
+        :class="{ hidden: this.user.isLoggedIn }"
       >
         Log In
       </router-link>
-      <div class="dropdown dropdown-end" :class="{ hidden: !loggedIn }">
+      <div
+        class="dropdown dropdown-end"
+        :class="{ hidden: !this.user.isLoggedIn }"
+      >
         <label tabindex="0" class="btn btn-ghost btn-circle avatar">
           <div class="w-10 rounded-full">
-            <img src="https://api.lorem.space/image/face?hash=33791" />
+            <img :src="this.user.avatar" />
           </div>
         </label>
         <ul
@@ -102,22 +150,24 @@ export default {
               >Profile</router-link
             >
           </li>
-          <li v-if="this.isSeller == true">
+          <li v-if="this.user.role == 'seller'">
             <router-link to="/dashboard" class="justify-between"
               >Dashboard</router-link
             >
           </li>
-          <li v-if="this.isAdmin == true">
+          <li v-if="this.user.role == 'admin'">
             <router-link to="/admin" class="justify-between"
               >Admin Panel</router-link
             >
           </li>
-          <li><a @click="loggedIn = !loggedIn">Logout</a></li>
+          <li>
+            <a @click="this.logOut()">Logout</a>
+          </li>
         </ul>
       </div>
     </div>
   </header>
-  <router-view></router-view>
+  <router-view :userID="user.id"></router-view>
   <footer
     class="footer footer-center p-10 bg-base-200 text-base-content rounded shadow-md mt-4"
   >
