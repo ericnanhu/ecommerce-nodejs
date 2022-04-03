@@ -17,13 +17,6 @@ async function createProduct(req, res, next) {
     name: req.body.name,
     price: req.body.price,
     description: req.body.description,
-    address: {
-      country: req.body.country,
-      province: req.body.province,
-      city: req.body.city,
-      postCode: req.body.postCode,
-      street: req.body.street,
-    },
     shop: req.query.shopID,
   });
   newProduct.save();
@@ -48,12 +41,17 @@ async function createProduct(req, res, next) {
   }
 
   // Add images
-  for (const productImage in req.body.files["images"]) {
-    await Product.findByIdAndUpdate(
-      newProduct._id,
-      { $push: { images: productImage.path } },
-      { new: true }
-    );
+  if (req.files) {
+    let i = 0;
+    for (i = 0; i < req.files.length; i++) {
+      const image = req.files[i];
+      const path = /(\/uploads)(.+)/g.exec(image.path)[0];
+      await Product.findByIdAndUpdate(
+        newProduct._id,
+        { $push: { images: path } },
+        { new: true }
+      );
+    }
   }
 
   res.json(newProduct);

@@ -10,18 +10,13 @@ export default {
   data() {
     return {
       products: {},
+      productCategories: [],
       createProduct: {
         name: "",
         images: [],
         price: "",
         description: "",
-        address: {
-          country: "",
-          province: "",
-          city: "",
-          postCode: "",
-          street: "",
-        },
+        categories: [],
       },
     };
   },
@@ -38,7 +33,19 @@ export default {
           withProducts: true,
         },
       });
+
       this.products = shop.data.products;
+
+      // Get all product categories
+      const categories = await axios({
+        baseURL: import.meta.env.VITE_BACKENDURL,
+        method: "get",
+        url: "/main/category/all",
+      });
+
+      this.productCategories = categories.data;
+
+      // console.log(this.productCategories);
     } catch (e) {
       console.log(e);
     }
@@ -50,21 +57,21 @@ export default {
         const formData = new FormData();
 
         formData.append("name", this.createProduct.name);
-        formData.append("images", this.createProduct.images);
+        // formData.append("images", this.createProduct.images);
         formData.append("price", this.createProduct.price);
         formData.append("description", this.createProduct.description);
-        formData.append("country", this.createProduct.address.country);
-        formData.append("province", this.createProduct.address.province);
-        formData.append("city", this.createProduct.address.city);
-        formData.append("street", this.createProduct.address.street);
-        formData.append("postCode", this.createProduct.address.postCode);
+        formData.append("categories", this.createProduct.categories);
+
+        for (const i of Object.keys(this.createProduct.images)) {
+          formData.append("images", this.createProduct.images[i]);
+        }
 
         await axios({
           baseURL: import.meta.env.VITE_BACKENDURL,
           method: "post",
-          url: "/seller/shop/create",
+          url: "/seller/product/create",
           params: {
-            userID: this.userID,
+            shopID: this.shopID,
           },
           headers: { "Content-Type": "multipart/form-data" },
           data: formData,
@@ -76,8 +83,14 @@ export default {
       }
     },
 
-    onChangeLogoUploadCreate(event) {
-      this.createShop.logo = event.target.files[0];
+    onChangeImageUploadCreate(event) {
+      this.createProduct.images = event.target.files;
+
+      console.log(this.createProduct.images);
+    },
+
+    onChangeCategorySelectCreate(event) {
+      console.log(event.target);
     },
 
     async updateShopForm() {
@@ -316,81 +329,77 @@ export default {
         >
         <h3 class="font-bold text-lg">Create Product</h3>
         <div class="divider"></div>
-        <form action="POST">
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text">Input 1</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Type here"
-              class="input input-bordered w-full"
-            />
+        <form
+          action="POST"
+          class="flex flex-col space-y-8"
+          @submit.prevent="createProductForm"
+        >
+          <div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">Name</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="Type here"
+                  class="input input-bordered w-full"
+                  v-model="this.createProduct.name"
+                />
+              </div>
+              <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">Price</span>
+                </label>
+                <input
+                  type="number"
+                  placeholder="Type here"
+                  class="input input-bordered w-full"
+                  v-model="this.createProduct.price"
+                />
+              </div>
+
+              <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">Price</span>
+                </label>
+                <select class="select select-bordered w-full max-w-xs" multiple>
+                  <option value="volvo">Volvo</option>
+                  <option value="saab">Saab</option>
+                  <option value="opel">Opel</option>
+                  <option value="audi">Audi</option>
+                </select>
+              </div>
+
+              <div class="form-control w-full">
+                <label class="label">
+                  <span class="label-text">Images</span>
+                </label>
+                <input
+                  type="file"
+                  placeholder="Type here"
+                  class="input input-bordered w-full py-1.5"
+                  @change="onChangeImageUploadCreate($event)"
+                  multiple
+                />
+              </div>
+              <div class="form-control w-full col-span-2">
+                <label class="label">
+                  <span class="label-text">Description</span>
+                </label>
+                <textarea
+                  class="textarea textarea-bordered"
+                  placeholder="Type Here"
+                  v-model="this.createProduct.description"
+                ></textarea>
+              </div>
+            </div>
           </div>
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text">Input 2</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Type here"
-              class="input input-bordered w-full"
-            />
-          </div>
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text">Input 3</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Type here"
-              class="input input-bordered w-full"
-            />
-          </div>
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text">Input 4</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Type here"
-              class="input input-bordered w-full"
-            />
-          </div>
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text">Input 5</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Type here"
-              class="input input-bordered w-full"
-            />
-          </div>
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text">Input 6</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Type here"
-              class="input input-bordered w-full"
-            />
-          </div>
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text">Input 7</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Type here"
-              class="input input-bordered w-full"
-            />
+
+          <div class="modal-action">
+            <button class="btn btn-primary" type="submit">Submit</button>
           </div>
         </form>
-        <div class="modal-action">
-          <label for="my-modal" class="btn btn-primary">Yay!</label>
-        </div>
       </div>
     </div>
 

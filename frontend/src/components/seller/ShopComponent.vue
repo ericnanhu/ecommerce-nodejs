@@ -71,7 +71,6 @@ export default {
 
         this.shop = shop.data;
         this.updateShop = shop.data;
-        // console.log(this.shop);
       }
     } catch (e) {
       console.log(e);

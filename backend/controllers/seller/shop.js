@@ -41,7 +41,8 @@ async function createShop(req, res, next) {
 
 // Show shop
 async function showShop(req, res, next) {
-  if (req.query.withProducts == true) {
+  // console.log(req.query)
+  if (req.query.withProducts == "true") {
     res.json(await Shop.findById(req.query.shopID).populate("products"));
   } else {
     res.json(await Shop.findById(req.query.shopID));

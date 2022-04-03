@@ -5,18 +5,8 @@ const productSchema = new Schema(
   {
     name: { type: String, required: true },
     images: [{ type: String }],
-    price: {
-      number: { type: String, required: true },
-      currency: { type: String, required: true },
-    },
+    price: { type: String, required: true },
     description: { type: String },
-    address: {
-      country: { type: String },
-      province: { type: String },
-      city: { type: String },
-      postCode: { type: String },
-      street: { type: String },
-    },
     categories: [{ type: Schema.Types.ObjectId, ref: "ProductCategory" }],
     shop: { type: Schema.Types.ObjectId, ref: "Shop" },
     reviews: [{ type: Schema.Types.ObjectId, ref: "Review" }],
