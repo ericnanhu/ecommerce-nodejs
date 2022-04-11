@@ -20,29 +20,11 @@ var {
   showProduct,
   updateProduct,
   deleteProduct,
-  addProductCategory,
-  removeProductCategory,
-  addProductImage,
-  removeProductImage,
 } = require("../controllers/seller/product");
 
 router.post("/product/create", uploadProductImage.array("images"), createProduct);
 router.get("/product/show", showProduct);
-router.put("/product/update", updateProduct);
+router.put("/product/update", uploadProductImage.array("images"), updateProduct);
 router.delete("/product/delete", deleteProduct);
-
-router.post("/product/category/add", addProductCategory);
-router.post("/product/category/remove", removeProductCategory);
-
-router.post(
-  "/product/image/add",
-  uploadProductImage.single("productImage"),
-  addProductImage
-);
-router.post(
-  "/product/image/remove",
-  uploadProductImage.single("productImage"),
-  removeProductImage
-);
 
 module.exports = router;

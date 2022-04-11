@@ -48,6 +48,18 @@ const router = createRouter({
       path: "/dashboard",
       name: "Dashboard",
       component: () => import("../views/seller/DashboardView.vue"),
+      children: [
+        {
+          path: "",
+          name: "DashboardHome",
+          component: () => import("../views/seller/HomeView.vue"),
+        },
+        {
+          path: "product/:productID",
+          name: "ProductDetail",
+          component: () => import("../views/seller/ProductDetailView.vue"),
+        },
+      ],
     },
     {
       path: "/admin",

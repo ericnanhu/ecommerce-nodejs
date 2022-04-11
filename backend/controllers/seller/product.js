@@ -21,23 +21,20 @@ async function createProduct(req, res, next) {
   });
   newProduct.save();
 
+  const productID = newProduct._id;
+
   // Add product to shop
   await Shop.findByIdAndUpdate(req.query.shopID, {
-    $push: { products: newProduct._id },
+    $push: { products: productID },
   });
 
   // Add categories
-  const categoryIDs = req.body.categories.match(/\w+/g);
-  for (const categoryID in categoryIDs) {
-    // update product
-    await Product.findByIdAndUpdate(newProduct._id, {
-      $push: { categories: categoryID },
-    });
+  let categories = req.body.categories;
+  categories = categories.match(/\w+/g);
 
-    // update product category
-    await ProductCategory.findByIdAndUpdate(categoryID, {
-      $push: { products: newProduct._id },
-    });
+  for (let i = 0; i < categories.length; i++) {
+    const categoryID = categories[i];
+    addProductCategory(productID, categoryID);
   }
 
   // Add images
@@ -46,11 +43,7 @@ async function createProduct(req, res, next) {
     for (i = 0; i < req.files.length; i++) {
       const image = req.files[i];
       const path = /(\/uploads)(.+)/g.exec(image.path)[0];
-      await Product.findByIdAndUpdate(
-        newProduct._id,
-        { $push: { images: path } },
-        { new: true }
-      );
+      addProductImage(productID, path);
     }
   }
 
@@ -59,7 +52,9 @@ async function createProduct(req, res, next) {
 
 // Show Product
 async function showProduct(req, res, next) {
-  res.json(await Product.findById(req.query.productID));
+  res.json(
+    await Product.findById(req.query.productID).populate("categories", "name")
+  );
 }
 
 // Update Product
@@ -68,21 +63,44 @@ async function updateProduct(req, res, next) {
     req.query.productID,
     {
       name: req.body.name,
-      price: {
-        number: req.body.priceNumber,
-        currency: req.body.priceCurrency,
-      },
+      price: req.body.price,
       description: req.body.description,
-      address: {
-        country: req.body.country,
-        province: req.body.province,
-        city: req.body.city,
-        postCode: req.body.postCode,
-        street: req.body.street,
-      },
     },
     { new: true }
-  );
+  ).populate("categories", "name");
+
+  if (req.body.categories) {
+    // Remove old categories
+    let oldCategories = updatedProduct.categories;
+    for (let i = 0; i < oldCategories.length; i++) {
+      const categoryID = oldCategories[i]._id;
+      removeProductCategory(req.query.productID, categoryID);
+    }
+
+    // Add new categories
+    let newCategories = req.body.categories;
+    newCategories = newCategories.match(/\w+/g);
+
+    for (let i = 0; i < newCategories.length; i++) {
+      const categoryID = newCategories[i];
+      addProductCategory(req.query.productID, categoryID);
+    }
+  }
+
+  // Update images
+  if (req.files.length != 0) {
+    // Remove product images
+    removeProductImages(req.query.productID);
+
+    // Add product images
+    let i = 0;
+    for (i = 0; i < req.files.length; i++) {
+      const image = req.files[i];
+      const path = /(\/uploads)(.+)/g.exec(image.path)[0];
+      console.log(path);
+      addProductImage(req.query.productID, path);
+    }
+  }
 
   res.json(updatedProduct);
 }
@@ -97,53 +115,39 @@ async function deleteProduct(req, res, next) {
 }
 
 // Add product category
-async function addProductCategory(req, res, next) {
+async function addProductCategory(productID, categoryID) {
   // update product
-  const updatedProduct = await Product.findByIdAndUpdate(req.query.productID, {
-    $push: { categories: req.query.categoryID },
+  await Product.findByIdAndUpdate(productID, {
+    $push: { categories: categoryID },
   });
 
   // update product category
-  await ProductCategory.findByIdAndUpdate(req.query.categoryID, {
-    $push: { products: req.query.productID },
+  await ProductCategory.findByIdAndUpdate(categoryID, {
+    $push: { products: productID },
   });
-
-  res.json(updatedProduct);
 }
 
 // Remove product category
-async function removeProductCategory(req, res, next) {
+async function removeProductCategory(productID, categoryID) {
   // update product
-  const updatedProduct = await Product.findByIdAndUpdate(req.query.productID, {
-    $push: { categories: req.query.categoryID },
+  await Product.findByIdAndUpdate(productID, {
+    $pull: { categories: categoryID },
   });
 
   // update product category
-  await ProductCategory.findByIdAndUpdate(req.query.categoryID, {
-    $push: { products: req.query.productID },
+  await ProductCategory.findByIdAndUpdate(categoryID, {
+    $pull: { products: productID },
   });
-
-  res.json(updatedProduct);
 }
 
 // Add product image
-async function addProductImage(req, res, next) {
-  const updatedProduct = await Product.findByIdAndUpdate(
-    req.query.productID,
-    { $push: { images: req.file.path } },
-    { new: true }
-  );
-  res.json(updatedProduct);
+async function addProductImage(productID, path) {
+  await Product.findByIdAndUpdate(productID, { $push: { images: path } });
 }
 
-// Remove product image
-async function removeProductImage(req, res, next) {
-  const updatedProduct = await Product.findByIdAndUpdate(
-    req.query.productID,
-    { $pull: { images: req.file.path } },
-    { new: true }
-  );
-  res.json(updatedProduct);
+// Remove product images
+async function removeProductImages(productID) {
+  await Product.findByIdAndUpdate(productID, { images: [] });
 }
 
 module.exports = {
@@ -151,8 +155,4 @@ module.exports = {
   showProduct,
   updateProduct,
   deleteProduct,
-  addProductCategory,
-  removeProductCategory,
-  addProductImage,
-  removeProductImage,
 };
