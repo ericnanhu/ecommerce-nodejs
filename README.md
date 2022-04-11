@@ -6,7 +6,7 @@
 - Three roles. Admin, seller and user.
 - Admin can create, view, update and delete categories. Admin can view and delete users, shops, products and reviews.
 - Sellers can create, view, update and delete shop (only one) and products.
-- Users can apply to become sellers. Users can browse shops and products. Users can create and update user profile.
+- Users can apply to become sellers. Users can browse shops and products, create and update user profile, as well as create and delete reviews.
 
 ## Coming Soon
 
