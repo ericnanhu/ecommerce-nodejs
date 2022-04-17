@@ -155,11 +155,6 @@ export default {
               >Dashboard</router-link
             >
           </li>
-          <li v-if="this.user.role == 'admin'">
-            <router-link to="/admin" class="justify-between"
-              >Admin Panel</router-link
-            >
-          </li>
           <li>
             <a @click="this.logOut()">Logout</a>
           </li>

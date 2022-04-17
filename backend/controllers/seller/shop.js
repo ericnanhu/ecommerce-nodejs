@@ -57,7 +57,7 @@ async function updateShop(req, res, next) {
     // console.log(path);
     await Shop.findByIdAndUpdate(req.query.shopID, { logo: path });
   }
-  const updatedShop = await Shop.findByIdAndUpdate(req.query.shopID, {
+  await Shop.findByIdAndUpdate(req.query.shopID, {
     name: req.body.name,
     phone: req.body.phone,
     email: req.body.email,
@@ -76,13 +76,15 @@ async function updateShop(req, res, next) {
 
 // Delete Shop
 async function deleteShop(req, res, next) {
-  // Delete Shop
-  const deletedShop = await Shop.findByIdAndRemove(req.query.shopID);
+  const shop = await Shop.findById(req.query.shopID);
   // Update user, remove shop from user
-  await User.findByIdAndUpdate(deletedShop.user._id, {
+  await User.findByIdAndUpdate(shop.user, {
     $unset: { shop: 1 },
   });
-  res.json(deletedShop);
+  // Delete Shop
+  await Shop.findByIdAndRemove(req.query.shopID);
+
+  res.send("Shop Deleted!");
 }
 
 module.exports = {

@@ -47,56 +47,7 @@ const router = createRouter({
     {
       path: "/dashboard",
       name: "Dashboard",
-      component: () => import("../views/seller/DashboardView.vue"),
-      children: [
-        {
-          path: "",
-          name: "DashboardHome",
-          component: () => import("../views/seller/HomeView.vue"),
-        },
-        {
-          path: "product/:productID",
-          name: "ProductDetail",
-          component: () => import("../views/seller/ProductDetailView.vue"),
-        },
-      ],
-    },
-    {
-      path: "/admin",
-      name: "Admin",
-      component: () => import("../views/admin/AdminView.vue"),
-      children: [
-        {
-          path: "",
-          name: "AdminHome",
-          component: () => import("../views/admin/HomeView.vue"),
-        },
-        {
-          path: "role",
-          name: "AdminRoleManage",
-          component: () => import("../views/admin/RoleManage.vue"),
-        },
-        {
-          path: "user",
-          name: "AdminUserManage",
-          component: () => import("../views/admin/UserManage.vue"),
-        },
-        {
-          path: "shop",
-          name: "AdminShopManage",
-          component: () => import("../views/admin/ShopManage.vue"),
-        },
-        {
-          path: "product",
-          name: "AdminProductManage",
-          component: () => import("../views/admin/ProductManage.vue"),
-        },
-        {
-          path: "review",
-          name: "AdminReviewManage",
-          component: () => import("../views/admin/ReviewManage.vue"),
-        },
-      ],
+      component: () => import("../views/DashboardView.vue"),
     },
   ],
 });

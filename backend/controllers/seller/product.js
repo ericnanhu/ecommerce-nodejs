@@ -31,6 +31,7 @@ async function createProduct(req, res, next) {
   // Add categories
   let categories = req.body.categories;
   categories = categories.match(/\w+/g);
+  // console.log(categories);
 
   for (let i = 0; i < categories.length; i++) {
     const categoryID = categories[i];
@@ -66,15 +67,16 @@ async function updateProduct(req, res, next) {
       price: req.body.price,
       description: req.body.description,
     },
-    { new: true }
-  ).populate("categories", "name");
+    { new: false }
+  );
 
   if (req.body.categories) {
     // Remove old categories
     let oldCategories = updatedProduct.categories;
+    console.log(oldCategories);
     for (let i = 0; i < oldCategories.length; i++) {
       const categoryID = oldCategories[i]._id;
-      removeProductCategory(req.query.productID, categoryID);
+      await removeProductCategory(req.query.productID, categoryID);
     }
 
     // Add new categories
@@ -83,7 +85,8 @@ async function updateProduct(req, res, next) {
 
     for (let i = 0; i < newCategories.length; i++) {
       const categoryID = newCategories[i];
-      addProductCategory(req.query.productID, categoryID);
+      console.log(categoryID);
+      await addProductCategory(req.query.productID, categoryID);
     }
   }
 
@@ -108,10 +111,20 @@ async function updateProduct(req, res, next) {
 // Delete Product
 async function deleteProduct(req, res, next) {
   const deletedProduct = await Product.findByIdAndRemove(req.query.productID);
+
+  // Remove product from shop
   await Shop.findByIdAndUpdate(deletedProduct.shop._id, {
     $pull: { products: deletedProduct._id },
   });
-  res.json(deletedProduct);
+
+  // Remove product from categories
+  for (let i = 0; i < deletedProduct.categories.length; i++) {
+    const categoryID = deletedProduct.categories[i];
+    await ProductCategory.findByIdAndUpdate(categoryID, {
+      $pull: { products: req.query.productID },
+    });
+  }
+  res.send("Product Deleted!");
 }
 
 // Add product category
