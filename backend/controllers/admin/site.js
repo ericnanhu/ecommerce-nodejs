@@ -14,15 +14,26 @@ async function createSite(req, res, next) {
 }
 
 async function updateSite(req, res, next) {
-  res.json(await Site.findByIdAndUpdate(req.query.id, req.body, { new: true }));
+  await Site.findByIdAndUpdate(
+    req.query.siteID,
+    {
+      name: req.body.name,
+      description: req.body.description,
+      keywords: req.body.keywords,
+    },
+    { new: true }
+  );
+
+  console.log(req.body);
+  res.send("Site Updated");
 }
 
 async function showSite(req, res, next) {
-  res.json(await Site.findById(req.query.id));
+  res.json(await Site.findById(req.query.siteID));
 }
 
 async function deleteSite(req, res, next) {
-  res.json(await Site.findByIdAndDelete(req.query.id));
+  res.json(await Site.findByIdAndDelete(req.query.siteID));
 }
 
 module.exports = {
