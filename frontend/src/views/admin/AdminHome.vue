@@ -20,7 +20,6 @@ export default {
         url: "/main/site",
       });
       this.site = site.data[0];
-      console.log(this.site);
     } catch (e) {
       console.log(e);
     }
@@ -29,13 +28,6 @@ export default {
   methods: {
     async updateSite() {
       try {
-        const formData = new FormData();
-
-        formData.append("name", this.site.name);
-        formData.append("description", this.site.description);
-        formData.append("keywords", this.site.keywords);
-        console.log(this.site.description);
-
         await axios({
           baseURL: import.meta.env.VITE_BACKENDURL,
           method: "put",
@@ -43,9 +35,9 @@ export default {
           params: {
             siteID: this.site._id,
           },
-          data: formData,
+          data: this.site,
         });
-        // window.location.reload();
+        window.location.reload();
       } catch (e) {
         console.log(e);
       }
@@ -90,10 +82,10 @@ export default {
         <h3 class="font-bold text-lg">Update Site Information</h3>
         <div class="divider"></div>
         <form
-          action="POST"
+          action="PUT"
           class="flex flex-col space-y-8"
-          id="updateUserForm"
-          @submit.prevent="updateSite()"
+          id="updateSite"
+          @submit.prevent="updateSite"
         >
           <div class="form-control w-full">
             <label class="label">

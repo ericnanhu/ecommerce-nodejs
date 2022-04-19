@@ -17,12 +17,6 @@ export default {};
           >Home</router-link
         >
         <router-link
-          to="/admin/roles"
-          class="tab tab-lg w-full"
-          :class="{ 'tab-active': this.$route.name == 'AdminRoles' }"
-          >Roles</router-link
-        >
-        <!-- <router-link
           to="/admin/users"
           class="tab tab-lg w-full"
           :class="{ 'tab-active': this.$route.name == 'AdminUsers' }"
@@ -45,7 +39,7 @@ export default {};
           class="tab tab-lg w-full"
           :class="{ 'tab-active': this.$route.name == 'AdminReviews' }"
           >Reviews</router-link
-        > -->
+        >
       </div>
     </menu>
     <router-view class="col-span-3 h-screen overflow-auto"></router-view>

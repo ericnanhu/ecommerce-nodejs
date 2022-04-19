@@ -24,7 +24,7 @@ async function updateSite(req, res, next) {
     { new: true }
   );
 
-  console.log(req.body);
+  // console.table(req.body);
   res.send("Site Updated");
 }
 
