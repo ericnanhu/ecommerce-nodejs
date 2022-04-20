@@ -98,12 +98,12 @@ async function updateUser(req, res, next) {
 
 async function showUser(req, res, next) {
   res.json(
-    await User.findById(req.query.id).populate("shop").populate("role", "name")
+    await User.findById(req.query.userID).populate("shop").populate("role", "name")
   );
 }
 
 async function deleteUser(req, res, next) {
-  res.json(await User.findByIdAndDelete(req.query.id));
+  res.json(await User.findByIdAndDelete(req.query.userID));
 }
 
 module.exports = {

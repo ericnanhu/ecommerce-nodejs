@@ -1,39 +1,39 @@
 <script>
 import axios from "axios";
-import ShowUser from "@/components/admin/ShowUser.vue";
+import ShowShop from "@/components/admin/ShowShop.vue";
 
 export default {
-  components: { ShowUser },
+  components: { ShowShop },
 
   data() {
     return {
-      users: {},
+      shops: {},
     };
   },
 
   async created() {
     try {
-      const users = await axios({
+      const shops = await axios({
         baseURL: import.meta.env.VITE_BACKENDURL,
         method: "get",
-        url: "/admin/user/list",
+        url: "/admin/shop/list",
       });
-      this.users = users.data;
-      // console.log(this.users);
+      this.shops = shops.data;
+      // console.log(this.shops);
     } catch (e) {
       console.log(e);
     }
   },
 
   methods: {
-    async deleteUser(userID) {
+    async deleteShop(shopID) {
       try {
         await axios({
           baseURL: import.meta.env.VITE_BACKENDURL,
           method: "delete",
-          url: "/admin/user/delete",
+          url: "/admin/shop/delete",
           params: {
-            userID: userID,
+            shopID: shopID,
           },
         });
 
@@ -52,7 +52,7 @@ export default {
       <div
         class="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:justify-between"
       >
-        <h2 class="font-bold text-2xl">Users</h2>
+        <h2 class="font-bold text-2xl">Shops</h2>
       </div>
       <div class="divider"></div>
       <div class="overflow-x-auto">
@@ -61,56 +61,54 @@ export default {
           <thead>
             <tr>
               <th></th>
-              <th>Avatar</th>
-              <th>Username</th>
-              <th>Role</th>
+              <th>Logo</th>
+              <th>Name</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            <tr class="hover" v-for="(user, key) in this.users" :key="key">
+            <tr class="hover" v-for="(shop, key) in this.shops" :key="key">
               <td>{{ key + 1 }}</td>
               <td>
                 <div class="avatar">
                   <div class="w-16 rounded">
-                    <img :src="user.avatar" alt="user profile" />
+                    <img :src="shop.logo" alt="shop profile" />
                   </div>
                 </div>
               </td>
-              <td>{{ user.username }}</td>
-              <td>{{ user.role.name }}</td>
+              <td>{{ shop.name }}</td>
               <td class="flex space-x-2">
-                <label :for="'deleteUser' + key" class="btn btn-error"
+                <label :for="'deleteShop' + key" class="btn btn-error"
                   >Delete</label
                 >
-                <ShowUser :userID="user._id" :userKey="key"></ShowUser>
+                <ShowShop :shopID="shop._id" :shopKey="key"></ShowShop>
               </td>
               <input
                 type="checkbox"
-                :id="'deleteUser' + key"
+                :id="'deleteShop' + key"
                 class="modal-toggle"
               />
               <div class="modal">
                 <div class="modal-box relative">
                   <label
-                    :for="'deleteUser' + key"
+                    :for="'deleteShop' + key"
                     class="btn btn-sm btn-circle absolute right-2 top-2"
                     >✕</label
                   >
                   <h3 class="font-bold text-lg">
-                    Are you sure you want to delete this user - "{{
-                      user.username
+                    Are you sure you want to delete this shop - "{{
+                      shop.name
                     }}"?
                   </h3>
                   <div class="divider"></div>
                   <div class="flex space-x-4">
                     <button
-                      @click="deleteUser(user._id)"
+                      @click="deleteShop(shop._id)"
                       class="btn btn-error btn-outline"
                     >
                       Delete
                     </button>
-                    <label :for="'deleteUser' + key" class="btn btn-primary"
+                    <label :for="'deleteShop' + key" class="btn btn-primary"
                       >Cancel</label
                     >
                   </div>

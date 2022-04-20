@@ -11,7 +11,7 @@ async function listShop(req, res, next) {
 
 async function showShop(req, res, next) {
   res.json(
-    await Shop.findById(req.query.id).populate("user").populate("products")
+    await Shop.findById(req.query.shopID)
   );
 }
 

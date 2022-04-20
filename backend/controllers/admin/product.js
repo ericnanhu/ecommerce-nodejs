@@ -49,12 +49,7 @@ async function listProduct(req, res, next) {
 }
 
 async function showProduct(req, res, next) {
-  res.json(
-    await Product.findById(req.query.id)
-      .populate("categories")
-      .populate("reviews")
-      .populate("shop")
-  );
+  res.json(await Product.findById(req.query.productID));
 }
 
 async function deleteProduct(req, res, next) {
