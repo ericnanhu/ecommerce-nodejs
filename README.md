@@ -22,3 +22,19 @@
 ![Category Page](https://github.com/ericnanhu/ecommerce-nodejs/blob/main/screenshots/category.png?raw=true)
 
 ![Product Page](https://github.com/ericnanhu/ecommerce-nodejs/blob/main/screenshots/product.png?raw=true)
+
+![Login Page](https://github.com/ericnanhu/ecommerce-nodejs/blob/main/screenshots/login.png?raw=true)
+
+![Register Page](https://github.com/ericnanhu/ecommerce-nodejs/blob/main/screenshots/register.png?raw=true)
+
+![User Profile Page](https://github.com/ericnanhu/ecommerce-nodejs/blob/main/screenshots/user_profile.png?raw=true)
+
+![Dashboard Page](https://github.com/ericnanhu/ecommerce-nodejs/blob/main/screenshots/dashboard.png?raw=true)
+
+![Admin Home Page](https://github.com/ericnanhu/ecommerce-nodejs/blob/main/screenshots/admin_home.png?raw=true)
+
+![Admin User Page](https://github.com/ericnanhu/ecommerce-nodejs/blob/main/screenshots/admin_user.png?raw=true)
+
+![Admin Shop Page](https://github.com/ericnanhu/ecommerce-nodejs/blob/main/screenshots/admin_shop.png?raw=true)
+
+![Admin Product Page](https://github.com/ericnanhu/ecommerce-nodejs/blob/main/screenshots/admin_product.png?raw=true)
