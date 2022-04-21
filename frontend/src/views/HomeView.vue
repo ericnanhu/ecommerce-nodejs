@@ -88,7 +88,7 @@ export default {
           <h2 class="card-title">{{ shop.name }}</h2>
           <p>{{ trimText(shop.description, 100) }}</p>
           <div class="card-actions justify-end">
-            <router-link to="/shop" class="btn btn-primary"
+            <router-link :to="'/shop/' + shop._id" class="btn btn-primary"
               >Visit Shop</router-link
             >
           </div>

@@ -38,34 +38,34 @@ async function listRecentShops(req, res, next) {
 }
 
 // Retrieve all product that belongs to the specified category
-async function listCategoryProducts(req, res, next) {
-  const category = await ProductCategory.find({ name: req.query.categoryName });
-  const products = await Product.find({ categories: category })
-    .sort({ created_at: -1 })
-    .limit(15);
-  res.json(products);
-}
+// async function listCategoryProducts(req, res, next) {
+//   const category = await ProductCategory.find({ name: req.query.categoryName });
+//   const products = await Product.find({ categories: category })
+//     .sort({ created_at: -1 })
+//     .limit(15);
+//   res.json(products);
+// }
 
 // Retrieve all product that belongs to the specified shop
-async function listShopProducts(req, res, next) {
-  const shop = await Shop.findById(req.query.shopID);
-  const products = await Product.find({ shop: shop }).sort({ created_at: -1 });
-  res.json(products);
-}
+// async function listShopProducts(req, res, next) {
+//   const shop = await Shop.findById(req.query.shopID);
+//   const products = await Product.find({ shop: shop }).sort({ created_at: -1 });
+//   res.json(products);
+// }
 
 // Retrieve one single product category
-async function showProductCategory(req, res, next) {
-  res.json(await ProductCategory.findById(req.query.id));
+async function showCategory(req, res, next) {
+  res.json(await ProductCategory.findById(req.query.categoryID).populate("products"));
 }
 
 // Retrieve one single shop
 async function showShop(req, res, next) {
-  res.json(await Shop.findById(req.query.id));
+  res.json(await Shop.findById(req.query.shopID).populate("products"));
 }
 
 // Retrieve one single product
 async function showProduct(req, res, next) {
-  res.json(await Product.findById(req.query.id));
+  res.json(await Product.findById(req.query.productID).populate("reviews"));
 }
 
 // Add review to a product
@@ -115,9 +115,7 @@ module.exports = {
   listAllCategories,
   listRecentProducts,
   listRecentShops,
-  listCategoryProducts,
-  listShopProducts,
-  showProductCategory,
+  showCategory,
   showShop,
   showProduct,
   addProductReview,
