@@ -15,4 +15,10 @@
 - product review/rating system
 
 ## Screenshots
-![Home Page](https://github.com/ericnanhu/django-vue-starter-blog/blob/main/screenshots/Screen%20Shot%202022-02-13%20at%207.13.52%20PM.png?raw=true)
+![Home Page](https://github.com/ericnanhu/ecommerce-nodejs/blob/main/screenshots/home.png?raw=true)
+
+![Shop Page](https://github.com/ericnanhu/ecommerce-nodejs/blob/main/screenshots/shop.png?raw=true)
+
+![Category Page](https://github.com/ericnanhu/ecommerce-nodejs/blob/main/screenshots/category.png?raw=true)
+
+![Product Page](https://github.com/ericnanhu/ecommerce-nodejs/blob/main/screenshots/product.png?raw=true)
