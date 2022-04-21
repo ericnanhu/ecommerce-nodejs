@@ -1,4 +1,55 @@
-<script></script>
+<script>
+import axios from "axios";
+import ProductGrid from "@/components/ProductGrid.vue";
+
+export default {
+  components: { ProductGrid },
+
+  data() {
+    return {
+      shop: {},
+      products: {},
+      dataLoaded: false,
+    };
+  },
+
+  async created() {
+    try {
+      const shop = await axios({
+        baseURL: import.meta.env.VITE_BACKENDURL,
+        method: "get",
+        url: "main/shop/info",
+        params: {
+          shopID: this.$route.params.shopID,
+        },
+      });
+      this.shop = shop.data;
+
+      const products = await axios({
+        baseURL: import.meta.env.VITE_BACKENDURL,
+        method: "get",
+        url: "main/shop/product",
+        params: {
+          shopID: this.$route.params.shopID,
+        },
+      });
+      this.products = products.data;
+
+      console.table(this.products);
+
+      this.dataLoaded = true;
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  methods: {
+    trimText(text = "", n = 20) {
+      return text.substring(0, n) + "...";
+    },
+  },
+};
+</script>
 
 <template>
   <main class="flex flex-col space-y-4 p-2 md:p-0">

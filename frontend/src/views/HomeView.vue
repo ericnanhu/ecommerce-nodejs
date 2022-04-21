@@ -1,119 +1,62 @@
-<script></script>
+<script>
+import axios from "axios";
+import ProductGrid from "@/components/ProductGrid.vue";
+
+export default {
+  components: { ProductGrid },
+
+  data() {
+    return {
+      products: {},
+      shops: {},
+      categories: {},
+      dataLoaded: false,
+    };
+  },
+
+  async created() {
+    try {
+      const products = await axios({
+        baseURL: import.meta.env.VITE_BACKENDURL,
+        method: "get",
+        url: "main/product/recent",
+      });
+      this.products = products.data;
+
+      const shops = await axios({
+        baseURL: import.meta.env.VITE_BACKENDURL,
+        method: "get",
+        url: "main/shop/recent",
+      });
+      this.shops = shops.data;
+
+      const categories = await axios({
+        baseURL: import.meta.env.VITE_BACKENDURL,
+        method: "get",
+        url: "main/category/all",
+      });
+      this.categories = categories.data;
+
+      // console.table(this.products);
+      // console.table(this.shops);
+      // console.table(this.categories);
+
+      this.dataLoaded = true;
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  methods: {
+    trimText(text = "", n = 20) {
+      return text.substring(0, n) + "...";
+    },
+  },
+};
+</script>
 
 <template>
   <main class="flex flex-col space-y-4 p-2 md:p-0">
-    <!-- Image Carousel -->
-    <div
-      class="carousel carousel-center w-full p-4 space-x-4 bg-neutral rounded-md h-fit"
-    >
-      <div class="carousel-item">
-        <img
-          src="https://api.lorem.space/image/furniture?w=250&h=180&hash=8B7BCDC2"
-          class="rounded-md"
-        />
-      </div>
-      <div class="carousel-item">
-        <img
-          src="https://api.lorem.space/image/furniture?w=250&h=180&hash=500B67FB"
-          class="rounded-md"
-        />
-      </div>
-      <div class="carousel-item">
-        <img
-          src="https://api.lorem.space/image/furniture?w=250&h=180&hash=A89D0DE6"
-          class="rounded-md"
-        />
-      </div>
-      <div class="carousel-item">
-        <img
-          src="https://api.lorem.space/image/furniture?w=250&h=180&hash=225E6693"
-          class="rounded-md"
-        />
-      </div>
-      <div class="carousel-item">
-        <img
-          src="https://api.lorem.space/image/furniture?w=250&h=180&hash=9D9539E7"
-          class="rounded-md"
-        />
-      </div>
-      <div class="carousel-item">
-        <img
-          src="https://api.lorem.space/image/furniture?w=250&h=180&hash=BDC01094"
-          class="rounded-md"
-        />
-      </div>
-      <div class="carousel-item">
-        <img
-          src="https://api.lorem.space/image/furniture?w=250&h=180&hash=7F5AE56A"
-          class="rounded-md"
-        />
-      </div>
-    </div>
-    <!-- Recent Products -->
-    <div class="flex flex-row flex-wrap justify-between gap-4">
-      <div class="card bg-base-100 shadow-md rounded-md md:w-96">
-        <figure>
-          <img
-            src="https://api.lorem.space/image/shoes?w=400&h=225"
-            alt="Shoes"
-          />
-        </figure>
-        <div class="card-body">
-          <h2 class="card-title">Shoes!</h2>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque
-            veritatis veniam sequi similique laborum, harum aut saepe
-            aspernatur? Neque itaque corrupti nesciunt eaque hic. Ipsam!
-          </p>
-          <div class="card-actions justify-start">
-            <router-link to="/product" class="btn btn-primary"
-              >View Details</router-link
-            >
-            <button class="btn btn-outline">Add to Cart</button>
-          </div>
-        </div>
-      </div>
-      <div class="card bg-base-100 shadow-md rounded-md md:w-96">
-        <figure>
-          <img
-            src="https://api.lorem.space/image/shoes?w=400&h=225"
-            alt="Shoes"
-          />
-        </figure>
-        <div class="card-body">
-          <h2 class="card-title">Shoes!</h2>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque
-            veritatis veniam sequi similique laborum, harum aut saepe
-            aspernatur? Neque itaque corrupti nesciunt eaque hic. Ipsam!
-          </p>
-          <div class="card-actions justify-start">
-            <button class="btn btn-primary">View Details</button>
-            <button class="btn btn-outline">Add to Cart</button>
-          </div>
-        </div>
-      </div>
-      <div class="card bg-base-100 shadow-md rounded-md md:w-96">
-        <figure>
-          <img
-            src="https://api.lorem.space/image/shoes?w=400&h=225"
-            alt="Shoes"
-          />
-        </figure>
-        <div class="card-body">
-          <h2 class="card-title">Shoes!</h2>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque
-            veritatis veniam sequi similique laborum, harum aut saepe
-            aspernatur? Neque itaque corrupti nesciunt eaque hic. Ipsam!
-          </p>
-          <div class="card-actions justify-start">
-            <button class="btn btn-primary">View Details</button>
-            <button class="btn btn-outline">Add to Cart</button>
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="hero bg-neutral py-20 rounded-md shadow-md">
       <div class="hero-content text-center">
         <div class="max-w-md">
@@ -127,18 +70,23 @@
         </div>
       </div>
     </div>
+    <!-- Recent Products -->
+    <h2 class="font-bold text-2xl">Recent Products</h2>
+    <ProductGrid :products="this.products"></ProductGrid>
     <!-- Shops -->
-    <div class="flex flex-row flex-wrap gap-4 justify-between">
-      <div class="card w-96 bg-base-100 image-full shadow-md">
+    <h2 class="font-bold text-2xl">Shops</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <div
+        v-for="(shop, key) in this.shops"
+        :key="key"
+        class="card bg-base-100 image-full shadow-md"
+      >
         <figure>
-          <img
-            src="https://api.lorem.space/image/shoes?w=400&h=225"
-            alt="Shoes"
-          />
+          <img :src="shop.logo" :alt="shop.name" />
         </figure>
         <div class="card-body">
-          <h2 class="card-title">Shoes!</h2>
-          <p>If a dog chews shoes whose shoes does he choose?</p>
+          <h2 class="card-title">{{ shop.name }}</h2>
+          <p>{{ trimText(shop.description, 100) }}</p>
           <div class="card-actions justify-end">
             <router-link to="/shop" class="btn btn-primary"
               >Visit Shop</router-link
@@ -146,34 +94,21 @@
           </div>
         </div>
       </div>
-      <div class="card w-96 bg-base-100 image-full shadow-md">
-        <figure>
-          <img
-            src="https://api.lorem.space/image/shoes?w=400&h=225"
-            alt="Shoes"
-          />
-        </figure>
-        <div class="card-body">
-          <h2 class="card-title">Shoes!</h2>
-          <p>If a dog chews shoes whose shoes does he choose?</p>
-          <div class="card-actions justify-end">
-            <button class="btn btn-primary">Visit Shop</button>
-          </div>
-        </div>
-      </div>
-      <div class="card w-96 bg-base-100 image-full shadow-md">
-        <figure>
-          <img
-            src="https://api.lorem.space/image/shoes?w=400&h=225"
-            alt="Shoes"
-          />
-        </figure>
-        <div class="card-body">
-          <h2 class="card-title">Shoes!</h2>
-          <p>If a dog chews shoes whose shoes does he choose?</p>
-          <div class="card-actions justify-end">
-            <button class="btn btn-primary">Visit Shop</button>
-          </div>
+    </div>
+    <!-- Categories -->
+    <h2 class="font-bold text-2xl">Categories</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <div
+        v-for="(category, key) in this.categories"
+        :key="key"
+        class="card bg-neutral shadow-md"
+      >
+        <div class="card-body items-center justify-center">
+          <router-link
+            to="/shop"
+            class="card-title text-white hover:underline"
+            >{{ category.name }}</router-link
+          >
         </div>
       </div>
     </div>
