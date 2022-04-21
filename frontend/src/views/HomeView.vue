@@ -105,7 +105,7 @@ export default {
       >
         <div class="card-body items-center justify-center">
           <router-link
-            to="/shop"
+            :to="'/category/' + category._id"
             class="card-title text-white hover:underline"
             >{{ category.name }}</router-link
           >
