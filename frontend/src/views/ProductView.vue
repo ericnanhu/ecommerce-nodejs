@@ -1,59 +1,63 @@
-<script></script>
+<script>
+import axios from "axios";
+import ImageSlideShow from "@/components/ImageSlideShow.vue";
+
+export default {
+  components: { ImageSlideShow },
+
+  data() {
+    return {
+      product: {},
+      dataLoaded: false,
+    };
+  },
+
+  async created() {
+    try {
+      const product = await axios({
+        baseURL: import.meta.env.VITE_BACKENDURL,
+        method: "get",
+        url: "main/product/show",
+        params: {
+          productID: this.$route.params.productID,
+        },
+      });
+      this.product = product.data;
+
+      console.table(this.product);
+
+      this.dataLoaded = true;
+    } catch (e) {
+      console.log(e);
+    }
+  },
+
+  methods: {
+    trimText(text = "", n = 20) {
+      return text.substring(0, n) + "...";
+    },
+  },
+
+  computed: {
+    currentImage() {
+      return this.images[Math.abs(this.currentIndex) % this.images.length];
+    },
+  },
+};
+</script>
 
 <template>
   <main class="flex flex-col space-y-4 mx-2 md:mx-0">
     <div class="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4">
       <div class="basis-3/4">
-        <div
-          class="carousel w-full h-full p-4 space-x-4 bg-neutral rounded-md md:mr-2"
-        >
-          <div class="carousel-item">
-            <img
-              src="https://api.lorem.space/image/furniture?w=250&h=180&hash=8B7BCDC2"
-              class="rounded-md h-full"
-            />
-          </div>
-          <div class="carousel-item">
-            <img
-              src="https://api.lorem.space/image/furniture?w=250&h=180&hash=500B67FB"
-              class="rounded-md h-full"
-            />
-          </div>
-          <div class="carousel-item">
-            <img
-              src="https://api.lorem.space/image/furniture?w=250&h=180&hash=A89D0DE6"
-              class="rounded-md h-full"
-            />
-          </div>
-          <div class="carousel-item">
-            <img
-              src="https://api.lorem.space/image/furniture?w=250&h=180&hash=225E6693"
-              class="rounded-md h-full"
-            />
-          </div>
-          <div class="carousel-item">
-            <img
-              src="https://api.lorem.space/image/furniture?w=250&h=180&hash=9D9539E7"
-              class="rounded-md h-full"
-            />
-          </div>
-          <div class="carousel-item">
-            <img
-              src="https://api.lorem.space/image/furniture?w=250&h=180&hash=BDC01094"
-              class="rounded-md h-full"
-            />
-          </div>
-          <div class="carousel-item">
-            <img
-              src="https://api.lorem.space/image/furniture?w=250&h=180&hash=7F5AE56A"
-              class="rounded-md h-full"
-            />
-          </div>
-        </div>
+        <ImageSlideShow
+          v-if="this.dataLoaded == true"
+          :images="this.product.images"
+        ></ImageSlideShow>
       </div>
       <div class="basis-1/4 flex flex-col space-y-8">
         <h2 class="font-bold uppercase text-2xl">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit
+          {{ this.product.name }}
         </h2>
         <div class="flex">
           <div class="rating mr-2">
@@ -87,10 +91,7 @@
           <a class="hover:underline hover:text-primary">7 Reviews</a>
         </div>
         <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Excepturi
-          accusantium a ipsam, cupiditate perferendis earum ipsum at. Ducimus
-          cum facere doloribus tempora explicabo ex aliquid ratione consequatur.
-          Ipsa, corrupti modi.
+          {{ this.product.description }}
         </p>
         <div class="form-control">
           <div class="input-group">

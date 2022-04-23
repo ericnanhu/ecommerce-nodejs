@@ -28,7 +28,7 @@ export default {
           {{ trimText(product.description, 250) }}
         </p>
         <div class="card-actions justify-start">
-          <router-link to="/product" class="btn btn-primary"
+          <router-link :to="'/product/' + product._id" class="btn btn-primary"
             >View Details</router-link
           >
           <button class="btn btn-outline">Add to Cart</button>
