@@ -65,3 +65,47 @@ Shop Management
 Product Management
 
 ![Admin Product Page](https://github.com/ericnanhu/ecommerce-nodejs/blob/main/screenshots/admin_product.png?raw=true)
+
+## Installation Instruction
+
+Clone this project with the following command:
+
+```bash
+git clone https://github.com/ericnanhu/ecommerce-nodejs.git
+```
+
+Open the project with your code editor, and change into the **backend**:
+
+```bash
+cd backend
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run docker compose to start database:
+
+```bash
+docker-compose up
+```
+
+Start backend:
+
+```bash
+npm run watch
+```
+
+Change into **frontend** and install dependencies:
+
+```bash
+npm install
+```
+
+Start frontend:
+
+```bash
+npm run dev
+```

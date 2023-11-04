@@ -17,7 +17,7 @@ var app = express();
 global.__basedir = __dirname;
 
 var corsOptions = {
-  origin: 'http://localhost:8080', // Matches the frontend
+  origin: 'http://localhost:8000', // Matches the frontend
   optionsSuccessStatus: 200
 }
 app.use(cors(corsOptions));
