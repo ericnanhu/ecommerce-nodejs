@@ -86,7 +86,7 @@ export default {
     </div>
     <div class="navbar-center">
       <router-link to="/" class="btn btn-ghost normal-case text-lg sm:text-xl"
-        >Nodejs eCommerce</router-link
+        >deसी कमल</router-link
       >
     </div>
     <div class="navbar-end">
